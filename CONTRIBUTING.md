@@ -53,7 +53,7 @@ If you want to use develop branch in your code, simple pass `dev-develop` to dep
 ```json
 {
 	"require": {
-		"andres-montanez/magallanes": "dev-develop"
+		"nntoan/magallanes": "dev-develop"
 	}
 }
 ```
