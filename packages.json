@@ -1,0 +1,15 @@
+{
+    "packages": {
+        "nntoan/magallanes": {
+            "dev-master": {
+                "name": "nntoan/magallanes",
+                "source": {
+                    "type": "git",
+                    "url": "git@gitlab.com:nntoan/magallanes.git"
+                },
+                "type": "project",
+                "version": "dev-master"
+            }
+        }
+    }
+}

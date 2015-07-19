@@ -1,7 +1,7 @@
 {
     "name": "nntoan/magallanes",
     "description": "A Deployment Tool for PHP Applications",
-    "homepage": "http://magephp.com",
+    "homepage": "https://gitlab.com/nntoan/magallanes",
     "license": "MIT",
     "type": "library",
     "keywords": ["deployment"],
