@@ -5,6 +5,12 @@
     "license": "MIT",
     "type": "library",
     "keywords": ["deployment"],
+    "authors": [
+        {
+            "name": "Toan Nguyen",
+            "email": "nntoan.services@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=5.3"
     },

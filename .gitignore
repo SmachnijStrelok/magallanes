@@ -1,2 +1,24 @@
+# User specific & automatically generated files #
+#################################################
+.phpintel
+/.idea
+/.bundle
+/bin
+/node_modules
+/vendor
+.tags
+.tags_sorted_by_file
 *.disabled
+*.swp
 *.lock
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
