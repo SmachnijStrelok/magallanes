@@ -1,14 +1,14 @@
 {
-    "name": "nntoan/magallanes",
+    "name": "magephp/magallanes",
     "description": "A Deployment Tool for PHP Applications",
-    "homepage": "https://gitlab.com/nntoan/magallanes",
+    "homepage": "https://magephp.github.io",
     "license": "MIT",
     "type": "library",
     "keywords": ["deployment"],
     "authors": [
         {
-            "name": "Toan Nguyen",
-            "email": "nntoan.services@gmail.com"
+            "name": "James Moriarty",
+            "email": "moriarty@codefelony.com"
         }
     ],
     "require": {
