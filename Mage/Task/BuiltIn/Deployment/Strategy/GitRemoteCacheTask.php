@@ -47,10 +47,6 @@ class GitRemoteCacheTask extends BaseStrategyTaskAbstract implements IsReleaseAw
     public function run()
     {
         $this->checkOverrideRelease();
-	$vcs = $this->getExtraVcs();
-	$rsync = $this->getExtraRsync();
-
-Console::log($this->vcs($vcs, 'directory'));
 
         // If we are working with releases
         $deployToDirectory = $this->getConfig()->deployment('to');
@@ -66,7 +62,7 @@ Console::log($this->vcs($vcs, 'directory'));
             if ($resultFetch && $currentRelease) {
                 // If deployment configuration is rsync, include a flag to simply sync the deltas between the prior release
                 // rsync: { copy: yes }
-                $rsync_copy = $this->getConfig()->repository('rsync');
+                $rsync_copy = $this->getConfig()->extras('vcs', 'rsync');
                 // If copy_tool_rsync, use rsync rather than cp for finer control of what is copied
                 if ($rsync_copy && is_array($rsync_copy) && $rsync_copy['copy'] && $this->runCommandRemote('test -d ' . $releasesDirectory . '/' . $currentRelease)) {
                     if (isset($rsync_copy['copy_tool_rsync'])) {

@@ -1,12 +1,12 @@
 <?php
-/*
+/**
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) Andrés Montañez <andres@andresmontanez.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+**/
 
 namespace Mage\Task;
 
@@ -256,7 +256,7 @@ abstract class AbstractTask
     protected function getGitCacheAwareCommand($command)
     {
         if ($this->getConfig()->extras('enabled', 'top', false) === true) {
-	    if ($this->getConfig()->extras('vcs', 'enabled, false) === true) {
+	    if ($this->getConfig()->extras('vcs', 'enabled', false) === true) {
             	$sharedDirectory = $this->getConfig()->extras('directory', 'top', 'shared');
 	    	$cacheDirectory = $this->getConfig()->extras('vcs', 'directory', 'git-remote-cache');
 
@@ -277,7 +277,7 @@ abstract class AbstractTask
     protected function getRsyncCacheAwareCommand($command)
     {
         if ($this->getConfig()->extras('enabled', 'top', false) === true) {
-            if ($this->getConfig()->extras('rsync', 'enabled, false) === true) {
+            if ($this->getConfig()->extras('rsync', 'enabled', false) === true) {
                 $sharedDirectory = $this->getConfig()->extras('directory', 'top', 'shared');
                 $cacheDirectory = $this->getConfig()->extras('rsync', 'directory', 'rsync-remote-cache');
 
