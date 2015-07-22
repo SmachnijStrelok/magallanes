@@ -15,13 +15,13 @@ Simply add the following dependency to your project’s composer.json file:
 
 ```json
     "require-dev": {
-        "nntoan/magallanes": "~1.0.7"
+        "magephp/magallanes": "~1.0.7"
     }
 ```
 Now tell we update the vendors:
 
 ```bash
-$ composer update nntoan/magallanes
+$ composer update magephp/magallanes
 ```
 
 And finally we can use Magallanes from the vendor's bin:
@@ -33,7 +33,7 @@ $ bin/mage version
 ### System-wide installation with composer ###
 
 ```bash
-$ composer global require "nntoan/magallanes=~1.0.7"
+$ composer global require "magephp/magallanes=~1.0.*"
 ```
 
 Make sure you have ~/.composer/vendor/bin/ in your path.
@@ -59,7 +59,7 @@ And you are done!
 
 
 ### This is awesome! Where can I learn more? ###
-You can read the whole source code (naaah!); or checkout the documentation at: http://magephp.com
+You can read the whole source code (naaah!); or checkout the documentation at: https://magephp.github.io
 
 
 Enjoy your magic trip with **Magallanes** to the land of the easily deployable apps!!
