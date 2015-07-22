@@ -6,24 +6,22 @@ It will get your application to a safe harbor.
 
 
 ### So, What can it do? ###
-You can instruct Magallanes to deploy your code to all the servers you want (via rsync over ssh),
+You can instruct Magallanes to deploy your code to all the servers you want (eg: rsync over ssh),
 and run tasks for that freshly deployed code.
 
 ### How can I install it via composer? ###
 
 Simply add the following dependency to your project’s composer.json file:
 
-```js
+```json
     "require-dev": {
-        // ...
-        "nntoan/magallanes": "~1.0.*"
-        // ...
+        "nntoan/magallanes": "~1.0.7"
     }
 ```
 Now tell we update the vendors:
 
 ```bash
-$ php composer update nntoan/magallanes
+$ composer update nntoan/magallanes
 ```
 
 And finally we can use Magallanes from the vendor's bin:
@@ -35,7 +33,7 @@ $ bin/mage version
 ### System-wide installation with composer ###
 
 ```bash
-$ composer global require "nntoan/magallanes=~1.0.*"
+$ composer global require "nntoan/magallanes=~1.0.7"
 ```
 
 Make sure you have ~/.composer/vendor/bin/ in your path.
