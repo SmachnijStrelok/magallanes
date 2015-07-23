@@ -2,7 +2,56 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"name": "root",
+			"path": "./"
+		},
+		{
+			"name": "Mage/Command",
+			"path": "./Mage/Command"
+		},
+		{
+			"name": "Mage/Config",
+			"path": "./"
+		},
+		{
+			"name": "Mage/Console",
+			"path": "./"
+		},
+		{
+			"name": "Mage/Task",
+			"path": "./Mage/Task"
+		},
+		{
+			"name": "Mage/Task/BuiltIn",
+			"path": "./Mage/Task/BuiltIn"
+		},
+		{
+			"name": "Mage/Task/Releases",
+			"path": "./Mage/Task/Releases"
+		},
+		{
+			"name": "Mage/Yaml",
+			"path": "./Mage/Yaml"
+		},
+		{
+			"name": "tests/MageTest/Command",
+			"path": "./tests/MageTest/Command"
+		},
+		{
+			"name": "tests/MageTest/Console",
+			"path": "./tests/MageTest/Console"
+		},
+		{
+			"name": "tests/MageTest/Task",
+			"path": "./tests/MageTest/Task"
+		},
+		{
+			"name": "tests/MageTest/TestHelper",
+			"path": "./tests/MageTest/TestHelper"
+		},
+		{
+			"name": "vendor",
+			"path": "./vendor"
 		}
 	]
 }
