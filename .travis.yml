@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.3
   - 5.4
   - 5.5
   - 5.6
@@ -10,6 +9,7 @@ sudo: false
 
 cache:
   directories:
+    - bin
     - vendor
     - $HOME/.composer/cache
 
@@ -28,8 +28,3 @@ after_script:
 branches:
   only:
     - master
-
-notifications:
-  email:
-    on_success: never
-    on_failure: never
