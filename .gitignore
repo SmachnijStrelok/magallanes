@@ -12,6 +12,7 @@ Thumbs.db
 
 # IDE generated files
 .idea
+.phpintel
 nbproject
 .tags*
 magallanes.sublime*
