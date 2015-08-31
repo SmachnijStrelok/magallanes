@@ -2,23 +2,23 @@
 /**
  * This file is part of the Magallanes package.
  *
- * (c) Andrés Montañez <andres@andresmontanez.com>
+ * (c) J.Moriarty <moriarty@codefelony.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
-**/
+ **/
 
 namespace Mage\Task;
 
-use Mage\Console;
-use Mage\Config;
-use Mage\Task\Releases\IsReleaseAware;
 use Exception;
+use Mage\Config;
+use Mage\Console;
+use Mage\Task\Releases\IsReleaseAware;
 
 /**
  * Abstract Class for a Magallanes Task
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 abstract class AbstractTask
 {
@@ -185,9 +185,9 @@ abstract class AbstractTask
                 $releasesDirectory = '';
             } else {
                 $releasesDirectory = '/'
-                    . $this->getConfig()->release('directory', 'releases')
-                    . '/'
-                    . $this->getConfig()->getReleaseId();
+                . $this->getConfig()->release('directory', 'releases')
+                . '/'
+                . $this->getConfig()->getReleaseId();
             }
         } else {
             $releasesDirectory = '';
@@ -197,10 +197,10 @@ abstract class AbstractTask
         $needs_tty = ($this->getConfig()->general('ssh_needs_tty', false) ? '-t' : '');
 
         $localCommand = 'ssh ' . $this->getConfig()->getHostIdentityFileOption() . $needs_tty . ' -p ' . $this->getConfig()->getHostPort() . ' '
-            . '-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no '
-            . $this->getConfig()->getConnectTimeoutOption()
-            . ($this->getConfig()->deployment('user') != '' ? $this->getConfig()->deployment('user') . '@' : '')
-            . $this->getConfig()->getHostName();
+        . '-q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no '
+        . $this->getConfig()->getConnectTimeoutOption()
+        . ($this->getConfig()->deployment('user') != '' ? $this->getConfig()->deployment('user') . '@' : '')
+        . $this->getConfig()->getHostName();
 
         $remoteCommand = str_replace('"', '\"', $command);
         if ($cdToDirectoryFirst) {
@@ -256,13 +256,13 @@ abstract class AbstractTask
     protected function getGitCacheAwareCommand($command)
     {
         if ($this->getConfig()->extras('enabled', 'top', false) === true) {
-	    if ($this->getConfig()->extras('vcs', 'enabled', false) === true) {
-            	$sharedDirectory = $this->getConfig()->extras('directory', 'top', 'shared');
-	    	$cacheDirectory = $this->getConfig()->extras('vcs', 'directory', 'git-remote-cache');
+            if ($this->getConfig()->extras('vcs', 'enabled', false) === true) {
+                $sharedDirectory = $this->getConfig()->extras('directory', 'top', 'shared');
+                $cacheDirectory = $this->getConfig()->extras('vcs', 'directory', 'git-remote-cache');
 
-            	$remoteCacheDirectory = $sharedDirectory . '/' . $cacheDirectory;
-            	return 'cd ' . $remoteCacheDirectory . ' && ' . $command;
-	    }
+                $remoteCacheDirectory = $sharedDirectory . '/' . $cacheDirectory;
+                return 'cd ' . $remoteCacheDirectory . ' && ' . $command;
+            }
         }
 
         return $command;

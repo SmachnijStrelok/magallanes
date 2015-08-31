@@ -1,25 +1,26 @@
 <?php
+
 /**
  * This file is part of the Magallanes package.
  *
- * (c) Andrés Montañez <andres@andresmontanez.com>
+ * (c) J.Moriarty <moriarty@codefelony.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
-**/
+ **/
 
 namespace Mage;
 
+use Exception;
 use Mage\Config\ConfigNotFoundException;
 use Mage\Config\RequiredConfigNotFoundException;
 use Mage\Console;
 use Mage\Yaml\Yaml;
-use Exception;
 
 /**
  * Magallanes Configuration
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class Config
 {
@@ -63,7 +64,7 @@ class Config
     /**
      * Magallanes Global and Environment configuration
      */
-    private $generalConfig = array();
+    private $generalConfig     = array();
     private $environmentConfig = array();
 
     /**
@@ -283,7 +284,7 @@ class Config
             $configStage = $stage;
         }
 
-        $tasks = array();
+        $tasks  = array();
         $config = $this->getEnvironmentOption('tasks', array());
 
         // Host Config
@@ -294,11 +295,11 @@ class Config
         }
 
         if (isset($config[$configStage])) {
-            $tasksData = ($config[$configStage] ? (array)$config[$configStage] : array());
+            $tasksData = ($config[$configStage] ? (array) $config[$configStage] : array());
             foreach ($tasksData as $taskData) {
                 if (is_array($taskData)) {
                     $tasks[] = array(
-                        'name' => key($taskData),
+                        'name'       => key($taskData),
                         'parameters' => current($taskData),
                     );
                 } else {
@@ -322,7 +323,7 @@ class Config
         $envConfig = $this->getEnvironmentConfig();
         if (isset($envConfig['hosts'])) {
             if (is_array($envConfig['hosts'])) {
-                $hosts = (array)$envConfig['hosts'];
+                $hosts = (array) $envConfig['hosts'];
             } elseif (is_string($envConfig['hosts']) && file_exists($envConfig['hosts']) && is_readable($envConfig['hosts'])) {
                 $hosts = $this->getHostsFromFile($envConfig['hosts']);
             }
@@ -373,7 +374,7 @@ class Config
      */
     public function getHostPort()
     {
-        $info = explode(':', $this->host);
+        $info   = explode(':', $this->host);
         $info[] = $this->deployment('port', '22');
         return $info[1];
     }
@@ -480,7 +481,7 @@ class Config
      */
     public function extras($option, $property = 'top', $default = false)
     {
-	if ($property === 'top') {
+        if ($property === 'top') {
             // Host Config
             if (is_array($this->hostConfig) && isset($this->hostConfig['extras'])) {
                 if (isset($this->hostConfig['extras'][$option])) {
@@ -499,7 +500,7 @@ class Config
             } else {
                 return $default;
             }
-	} else if (($option === 'vcs' || $option === 'rsync') && $property !== 'top') {
+        } else if (($option === 'vcs' || $option === 'rsync' || $option === 'shared') && $property !== 'top') {
             // Host Config
             if (is_array($this->hostConfig) && isset($this->hostConfig['extras'][$option])) {
                 if (isset($this->hostConfig['extras'][$option][$property])) {
@@ -518,7 +519,7 @@ class Config
             } else {
                 return $default;
             }
-	}
+        }
     }
 
     public function setSourceTemporal($directory)
@@ -606,6 +607,23 @@ class Config
     }
 
     /**
+     * Get Environment nested root option
+     *
+     * @param string $option
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getNestedEnvironmentOption($option, $property, $default = array())
+    {
+        $config = $this->getEnvironmentConfig();
+        if (isset($config[$option][$property])) {
+            return $config[$option][$property];
+        } else {
+            return $default;
+        }
+    }
+
+    /**
      * Utility methods. TODO To be extracted into own Class
      */
     public function parseConfigFile($filePath)
@@ -651,7 +669,7 @@ class Config
 
         try {
             $fileContent = stream_get_contents($handle);
-            $hosts = json_decode($fileContent);
+            $hosts       = json_decode($fileContent);
         } catch (Exception $e) {
             rewind($handle);
             //do it old-style: one host per line

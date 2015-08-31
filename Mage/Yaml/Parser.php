@@ -11,8 +11,8 @@
 
 namespace Mage\Yaml;
 
-use Mage\Yaml\Inline;
 use Mage\Yaml\Exception\ParseException;
+use Mage\Yaml\Inline;
 
 /**
  * Parser parses YAML strings to convert them to PHP arrays.
@@ -61,7 +61,7 @@ class Parser
             throw new ParseException('The YAML value does not appear to be valid UTF-8.');
         }
 
-        if (function_exists('mb_internal_encoding') && ((int)ini_get('mbstring.func_overload')) & 2) {
+        if (function_exists('mb_internal_encoding') && ((int) ini_get('mbstring.func_overload')) & 2) {
             $mbEncoding = mb_internal_encoding();
             mb_internal_encoding('UTF-8');
         }
@@ -94,7 +94,7 @@ class Parser
                 if (!isset($values['value']) || '' == trim($values['value'], ' ') || 0 === strpos(ltrim($values['value'], ' '), '#')) {
                     $c = $this->getRealCurrentLineNb() + 1;
                     $parser = new self($c);
-                    $parser->refs =& $this->refs;
+                    $parser->refs = &$this->refs;
                     $data[] = $parser->parse($this->getNextEmbedBlock(), $exceptionOnInvalidType, $objectSupport, $objectForMap);
                 } else {
                     if (isset($values['leadspaces'])
@@ -104,7 +104,7 @@ class Parser
                         // this is a compact notation element, add to next block and parse
                         $c = $this->getRealCurrentLineNb();
                         $parser = new self($c);
-                        $parser->refs =& $this->refs;
+                        $parser->refs = &$this->refs;
 
                         $block = $values['value'];
                         if ($this->isNextLineIndented()) {
@@ -147,7 +147,7 @@ class Parser
                         }
                         $c = $this->getRealCurrentLineNb() + 1;
                         $parser = new self($c);
-                        $parser->refs =& $this->refs;
+                        $parser->refs = &$this->refs;
                         $parsed = $parser->parse($value, $exceptionOnInvalidType, $objectSupport, $objectForMap);
 
                         $merged = array();
@@ -189,7 +189,7 @@ class Parser
                     } else {
                         $c = $this->getRealCurrentLineNb() + 1;
                         $parser = new self($c);
-                        $parser->refs =& $this->refs;
+                        $parser->refs = &$this->refs;
                         $value = $parser->parse($this->getNextEmbedBlock(), $exceptionOnInvalidType, $objectSupport, $objectForMap);
                         // Spec: Keys MUST be unique; first one wins.
                         // Parser cannot abort this mapping earlier, since lines
@@ -243,23 +243,23 @@ class Parser
                 }
 
                 switch (preg_last_error()) {
-                    case PREG_INTERNAL_ERROR:
-                        $error = 'Internal PCRE error.';
-                        break;
-                    case PREG_BACKTRACK_LIMIT_ERROR:
-                        $error = 'pcre.backtrack_limit reached.';
-                        break;
-                    case PREG_RECURSION_LIMIT_ERROR:
-                        $error = 'pcre.recursion_limit reached.';
-                        break;
-                    case PREG_BAD_UTF8_ERROR:
-                        $error = 'Malformed UTF-8 data.';
-                        break;
-                    case PREG_BAD_UTF8_OFFSET_ERROR:
-                        $error = 'Offset doesn\'t correspond to the begin of a valid UTF-8 code point.';
-                        break;
-                    default:
-                        $error = 'Unable to parse.';
+                case PREG_INTERNAL_ERROR:
+                    $error = 'Internal PCRE error.';
+                    break;
+                case PREG_BACKTRACK_LIMIT_ERROR:
+                    $error = 'pcre.backtrack_limit reached.';
+                    break;
+                case PREG_RECURSION_LIMIT_ERROR:
+                    $error = 'pcre.recursion_limit reached.';
+                    break;
+                case PREG_BAD_UTF8_ERROR:
+                    $error = 'Malformed UTF-8 data.';
+                    break;
+                case PREG_BAD_UTF8_OFFSET_ERROR:
+                    $error = 'Offset doesn\'t correspond to the begin of a valid UTF-8 code point.';
+                    break;
+                default:
+                    $error = 'Unable to parse.';
                 }
 
                 throw new ParseException($error, $this->getRealCurrentLineNb() + 1, $this->currentLine);

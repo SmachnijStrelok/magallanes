@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Deployment\Strategy;
 
@@ -40,8 +40,8 @@ class GitRebaseTask extends BaseStrategyTaskAbstract implements IsReleaseAware
             $releasesDirectory = $this->getConfig()->release('directory', 'releases');
 
             $deployToDirectory = rtrim($this->getConfig()->deployment('to'), '/')
-                . '/' . $releasesDirectory
-                . '/' . $this->getConfig()->getReleaseId();
+            . '/' . $releasesDirectory
+            . '/' . $this->getConfig()->getReleaseId();
             $this->runCommandRemote('mkdir -p ' . $deployToDirectory);
         }
 

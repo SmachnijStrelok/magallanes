@@ -34,7 +34,7 @@ class Dumper
      */
     public function setIndentation($num)
     {
-        $this->indentation = (int)$num;
+        $this->indentation = (int) $num;
     }
 
     /**
@@ -62,11 +62,11 @@ class Dumper
                 $willBeInlined = $inline - 1 <= 0 || !is_array($value) || empty($value);
 
                 $output .= sprintf('%s%s%s%s',
-                        $prefix,
-                        $isAHash ? Inline::dump($key, $exceptionOnInvalidType, $objectSupport) . ':' : '-',
-                        $willBeInlined ? ' ' : "\n",
-                        $this->dump($value, $inline - 1, $willBeInlined ? 0 : $indent + $this->indentation, $exceptionOnInvalidType, $objectSupport)
-                    ) . ($willBeInlined ? "\n" : '');
+                    $prefix,
+                    $isAHash ? Inline::dump($key, $exceptionOnInvalidType, $objectSupport) . ':' : '-',
+                    $willBeInlined ? ' ' : "\n",
+                    $this->dump($value, $inline - 1, $willBeInlined ? 0 : $indent + $this->indentation, $exceptionOnInvalidType, $objectSupport)
+                ) . ($willBeInlined ? "\n" : '');
             }
         }
 

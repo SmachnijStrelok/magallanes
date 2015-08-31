@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Scm;
 
@@ -15,7 +15,7 @@ use Mage\Task\AbstractTask;
 /**
  * Task for Removing an used Cloned Repository
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class RemoveCloneTask extends AbstractTask
 {
@@ -48,9 +48,9 @@ class RemoveCloneTask extends AbstractTask
     {
         $this->source = $this->getConfig()->deployment('source');
         switch ($this->source['type']) {
-            case 'git':
-                $this->name = 'SCM Remove Clone (GIT) [built-in]';
-                break;
+        case 'git':
+            $this->name = 'SCM Remove Clone (GIT) [built-in]';
+            break;
         }
     }
 

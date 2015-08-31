@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Command\BuiltIn;
 
@@ -16,7 +16,7 @@ use Mage\Console;
 /**
  * Initializes a Magallanes Configuration into a Proyect
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class InitCommand extends AbstractCommand
 {
@@ -85,7 +85,7 @@ class InitCommand extends AbstractCommand
                 $notificationEnabled,
                 'true',
                 30,
-                'false'
+                'false',
             ),
             $this->getGeneralConfigTemplate()
         );
@@ -100,12 +100,12 @@ class InitCommand extends AbstractCommand
     protected function getGeneralConfigTemplate()
     {
         $template = '# global settings' . PHP_EOL
-            . 'name: %projectName%' . PHP_EOL
-            . 'email: %notificationEmail%' . PHP_EOL
-            . 'notifications: %notificationEnabled%' . PHP_EOL
-            . 'logging: %loggingEnabled%' . PHP_EOL
-            . 'maxlogs: %maxlogs%' . PHP_EOL
-            . 'ssh_needs_tty: %ssh_needs_tty%' . PHP_EOL;
+        . 'name: %projectName%' . PHP_EOL
+        . 'email: %notificationEmail%' . PHP_EOL
+        . 'notifications: %notificationEnabled%' . PHP_EOL
+        . 'logging: %loggingEnabled%' . PHP_EOL
+        . 'maxlogs: %maxlogs%' . PHP_EOL
+        . 'ssh_needs_tty: %ssh_needs_tty%' . PHP_EOL;
 
         return $template;
     }

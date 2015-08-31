@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Scm;
 
@@ -47,9 +47,9 @@ class ForceUpdateTask extends AbstractTask
     public function init()
     {
         switch ($this->getConfig()->general('scm')) {
-            case 'git':
-                $this->name = 'SCM Force Update (GIT) [built-in]';
-                break;
+        case 'git':
+            $this->name = 'SCM Force Update (GIT) [built-in]';
+            break;
         }
     }
 
@@ -60,23 +60,23 @@ class ForceUpdateTask extends AbstractTask
     public function run()
     {
         switch ($this->getConfig()->general('scm')) {
-            case 'git':
-                $branch = $this->getParameter('branch', 'master');
-                $remote = $this->getParameter('remote', 'origin');
-                
-                $command = 'git fetch ' . $remote . ' ' . $branch;
-                $result = $this->runCommand($command);
+        case 'git':
+            $branch = $this->getParameter('branch', 'master');
+            $remote = $this->getParameter('remote', 'origin');
 
-                $command = 'git reset --hard ' . $remote . '/' . $branch;
-                $result = $result && $this->runCommand($command);
+            $command = 'git fetch ' . $remote . ' ' . $branch;
+            $result = $this->runCommand($command);
 
-                $command = 'git pull ' . $remote . ' ' . $branch;
-                $result = $result && $this->runCommand($command);
-                break;
+            $command = 'git reset --hard ' . $remote . '/' . $branch;
+            $result = $result && $this->runCommand($command);
 
-            default:
-                throw new SkipException;
-                break;
+            $command = 'git pull ' . $remote . ' ' . $branch;
+            $result = $result && $this->runCommand($command);
+            break;
+
+        default:
+            throw new SkipException;
+            break;
         }
 
         $this->getConfig()->reload();

@@ -1,57 +1,174 @@
 {
-	"folders":
-	[
-		{
-			"name": "root",
-			"path": "./"
-		},
-		{
-			"name": "Mage/Command",
-			"path": "./Mage/Command"
-		},
-		{
-			"name": "Mage/Config",
-			"path": "./"
-		},
-		{
-			"name": "Mage/Console",
-			"path": "./"
-		},
-		{
-			"name": "Mage/Task",
-			"path": "./Mage/Task"
-		},
-		{
-			"name": "Mage/Task/BuiltIn",
-			"path": "./Mage/Task/BuiltIn"
-		},
-		{
-			"name": "Mage/Task/Releases",
-			"path": "./Mage/Task/Releases"
-		},
-		{
-			"name": "Mage/Yaml",
-			"path": "./Mage/Yaml"
-		},
-		{
-			"name": "tests/MageTest/Command",
-			"path": "./tests/MageTest/Command"
-		},
-		{
-			"name": "tests/MageTest/Console",
-			"path": "./tests/MageTest/Console"
-		},
-		{
-			"name": "tests/MageTest/Task",
-			"path": "./tests/MageTest/Task"
-		},
-		{
-			"name": "tests/MageTest/TestHelper",
-			"path": "./tests/MageTest/TestHelper"
-		},
-		{
-			"name": "vendor",
-			"path": "./vendor"
-		}
-	]
+    "folders":
+    [
+        {
+            "name": "root",
+            "path": "./",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel",
+                ".idea",
+                ".git",
+                "bin",
+                "Mage",
+                "tests",
+                "vendor"
+            ]
+        },
+        {
+            "name": "Mage",
+            "path": "./Mage",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel",
+                "Command",
+                "Config",
+                "Console",
+                "Task",
+                "Yaml"
+            ]
+        },
+        {
+            "name": "Mage/Command",
+            "path": "./Mage/Command",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "Mage/Config",
+            "path": "./",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "Mage/Console",
+            "path": "./",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "Mage/Task",
+            "path": "./Mage/Task",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                "BuiltIn",
+                "Releases"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "Mage/Task/BuiltIn",
+            "path": "./Mage/Task/BuiltIn",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "Mage/Task/Releases",
+            "path": "./Mage/Task/Releases",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "Mage/Yaml",
+            "path": "./Mage/Yaml",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "tests/MageTest/Command",
+            "path": "./tests/MageTest/Command",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "tests/MageTest/Console",
+            "path": "./tests/MageTest/Console",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "tests/MageTest/Task",
+            "path": "./tests/MageTest/Task",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "tests/MageTest/TestHelper",
+            "path": "./tests/MageTest/TestHelper",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        },
+        {
+            "name": "vendor",
+            "path": "./vendor",
+            "file_exclude_patterns": [
+                "._*",
+                "*.swp"
+            ],
+            "folder_exclude_patterns":[
+                ".phpintel"
+            ]
+        }
+    ]
 }

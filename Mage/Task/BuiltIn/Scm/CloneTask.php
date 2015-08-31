@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Scm;
 
@@ -16,7 +16,7 @@ use Mage\Task\SkipException;
 /**
  * Task for Clonning a Repository
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class CloneTask extends AbstractTask
 {
@@ -49,9 +49,9 @@ class CloneTask extends AbstractTask
     {
         $this->source = $this->getConfig()->deployment('source');
         switch ($this->source['type']) {
-            case 'git':
-                $this->name = 'SCM Clone (GIT) [built-in]';
-                break;
+        case 'git':
+            $this->name = 'SCM Clone (GIT) [built-in]';
+            break;
         }
 
         // Create temporal directory for clone
@@ -72,19 +72,19 @@ class CloneTask extends AbstractTask
     {
         $this->runCommandLocal('mkdir -p ' . $this->source['temporal']);
         switch ($this->source['type']) {
-            case 'git':
-                // Fast clone Repo form Branch
-                $command = 'cd ' . $this->source['temporal'] . ' ; '
-                    . 'git clone --depth 1 -q -b ' . $this->source['from']
-                    . ' ' . $this->source['repository'] . ' . ';
-                $result = $this->runCommandLocal($command);
+        case 'git':
+            // Fast clone Repo form Branch
+            $command = 'cd ' . $this->source['temporal'] . ' ; '
+            . 'git clone --depth 1 -q -b ' . $this->source['from']
+            . ' ' . $this->source['repository'] . ' . ';
+            $result = $this->runCommandLocal($command);
 
-                $this->getConfig()->setFrom($this->source['temporal']);
-                break;
+            $this->getConfig()->setFrom($this->source['temporal']);
+            break;
 
-            default:
-                throw new SkipException;
-                break;
+        default:
+            throw new SkipException;
+            break;
         }
 
         return $result;

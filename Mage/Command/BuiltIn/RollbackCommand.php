@@ -1,24 +1,24 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Command\BuiltIn;
 
 use Mage\Command\AbstractCommand;
 use Mage\Command\RequiresEnvironment;
-use Mage\Task\Factory;
 use Mage\Console;
+use Mage\Task\Factory;
 
 /**
  * This is an Alias of "release rollback"
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class RollbackCommand extends AbstractCommand implements RequiresEnvironment
 {
@@ -28,7 +28,7 @@ class RollbackCommand extends AbstractCommand implements RequiresEnvironment
      */
     public function run()
     {
-        $exitCode = 105;
+        $exitCode  = 105;
         $releaseId = $this->getConfig()->getArgument(1);
 
         if (!is_numeric($releaseId)) {
@@ -55,7 +55,7 @@ class RollbackCommand extends AbstractCommand implements RequiresEnvironment
                 $hostConfig = null;
                 if (is_array($host)) {
                     $hostConfig = $host;
-                    $host = $hostKey;
+                    $host       = $hostKey;
                 }
 
                 // Set Host and Host Specific Config

@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Scm;
 
@@ -16,7 +16,7 @@ use Mage\Task\SkipException;
 /**
  * Task for Updating a Working Copy
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class UpdateTask extends AbstractTask
 {
@@ -42,9 +42,9 @@ class UpdateTask extends AbstractTask
     public function init()
     {
         switch ($this->getConfig()->general('scm')) {
-            case 'git':
-                $this->name = 'SCM Update (GIT) [built-in]';
-                break;
+        case 'git':
+            $this->name = 'SCM Update (GIT) [built-in]';
+            break;
         }
     }
 
@@ -56,13 +56,13 @@ class UpdateTask extends AbstractTask
     {
         $command = 'cd ' . $this->getConfig()->deployment('from', './') . '; ';
         switch ($this->getConfig()->general('scm')) {
-            case 'git':
-                $command .= 'git pull';
-                break;
+        case 'git':
+            $command .= 'git pull';
+            break;
 
-            default:
-                throw new SkipException;
-                break;
+        default:
+            throw new SkipException;
+            break;
         }
 
         $result = $this->runCommandLocal($command);

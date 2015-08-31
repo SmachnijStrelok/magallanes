@@ -1,25 +1,25 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Releases;
 
 use Mage\Console;
-use Mage\Task\Factory;
 use Mage\Task\AbstractTask;
+use Mage\Task\Factory;
 use Mage\Task\Releases\IsReleaseAware;
 use Mage\Task\Releases\RollbackAware;
 
 /**
  * Task for Performing a Rollback Operation
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class RollbackTask extends AbstractTask implements IsReleaseAware
 {

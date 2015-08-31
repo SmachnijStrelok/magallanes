@@ -1,12 +1,13 @@
 <?php
-/*
+
+/**
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Deployment\Strategy;
 
@@ -16,7 +17,7 @@ use Mage\Task\Releases\IsReleaseAware;
 /**
  * Abstract Base task to concentrate common code for Deployment Tasks
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 abstract class BaseStrategyTaskAbstract extends AbstractTask implements IsReleaseAware
 {
@@ -28,11 +29,11 @@ abstract class BaseStrategyTaskAbstract extends AbstractTask implements IsReleas
     protected function checkOverrideRelease()
     {
         $overrideRelease = $this->getParameter('overrideRelease', false);
-        $symlink = $this->getConfig()->release('symlink', 'public');
+        $symlink         = $this->getConfig()->release('symlink', 'public');
 
         if ($overrideRelease === true) {
             $releaseToOverride = false;
-            $resultFetch = $this->runCommandRemote('ls -ld ' . $symlink . ' | cut -d"/" -f2', $releaseToOverride);
+            $resultFetch       = $this->runCommandRemote('ls -ld ' . $symlink . ' | cut -d"/" -f2', $releaseToOverride);
             if ($resultFetch && is_numeric($releaseToOverride)) {
                 $this->getConfig()->setReleaseId($releaseToOverride);
             }
@@ -49,12 +50,11 @@ abstract class BaseStrategyTaskAbstract extends AbstractTask implements IsReleas
     protected function getExcludes()
     {
         $excludes = array(
-            '.git',
-            '.svn',
+            '.git*',
+            '.svn*',
             '.mage',
-            '.gitignore',
-            '.gitkeep',
-            'nohup.out'
+            '.rsync_excludes',
+            'nohup.out',
         );
 
         // Look for User Excludes
@@ -64,13 +64,26 @@ abstract class BaseStrategyTaskAbstract extends AbstractTask implements IsReleas
     }
 
     /**
+     * Gathers the shared files & folders
+     *
+     * @return array
+     */
+    protected function getSharedStuffs()
+    {
+        $sharedFiles = $this->getConfig()->extras('shared', 'files', array());
+
+        $sharedFolders = $this->getConfig()->extras('shared', 'folders', array());
+
+        return array_merge($sharedFiles, $sharedFolders);
+    }
+
+    /**
      * Gathers extras/vcs properties
      *
      * @return array
      */
     protected function getExtraVcs()
     {
-        // Look for Extras VCS
         $extraVcsProperties = $this->getConfig()->extras('vcs', 'top', array());
 
         return $extraVcsProperties;
@@ -83,7 +96,6 @@ abstract class BaseStrategyTaskAbstract extends AbstractTask implements IsReleas
      */
     protected function getExtraRsync()
     {
-        // Look for Extras Rsync
         $extraRsyncProperties = $this->getConfig()->extras('rsync', 'top', array());
 
         return $extraRsyncProperties;

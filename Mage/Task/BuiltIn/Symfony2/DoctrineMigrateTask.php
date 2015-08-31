@@ -1,12 +1,12 @@
 <?php
 /*
-* This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the Magallanes package.
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Symfony2;
 
@@ -36,7 +36,7 @@ class DoctrineMigrateTask extends SymfonyAbstractTask
         $env = $this->getParameter('env', 'dev');
 
         $command = $this->getAppPath() . ' doctrine:migrations:migrate -n --env=' . $env;
-        
+
         return $this->runCommand($command);
     }
 }

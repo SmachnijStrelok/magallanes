@@ -1,24 +1,24 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Command\BuiltIn;
 
 use Mage\Command\AbstractCommand;
 use Mage\Command\RequiresEnvironment;
-use Mage\Task\Factory;
 use Mage\Console;
+use Mage\Task\Factory;
 
 /**
  * Command for Managing the Releases
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class ReleasesCommand extends AbstractCommand implements RequiresEnvironment
 {
@@ -57,33 +57,33 @@ class ReleasesCommand extends AbstractCommand implements RequiresEnvironment
             $this->getConfig()->setHostConfig($hostConfig);
 
             switch ($subCommand) {
-                case 'list':
-                    $task = Factory::get('releases/list', $this->getConfig());
-                    $task->init();
-                    $result = $task->run() && $result;
-                    break;
+            case 'list':
+                $task = Factory::get('releases/list', $this->getConfig());
+                $task->init();
+                $result = $task->run() && $result;
+                break;
 
-                case 'rollback':
-                    if (!is_numeric($this->getConfig()->getParameter('release', ''))) {
-                        Console::output('<red>Missing required releaseid.</red>', 1, 2);
+            case 'rollback':
+                if (!is_numeric($this->getConfig()->getParameter('release', ''))) {
+                    Console::output('<red>Missing required releaseid.</red>', 1, 2);
 
-                        return 102;
-                    }
+                    return 102;
+                }
 
-                    $lockFile = getcwd() . '/.mage/' . $this->getConfig()->getEnvironment() . '.lock';
-                    if (file_exists($lockFile)) {
-                        Console::output('<red>This environment is locked!</red>', 1, 2);
-                        echo file_get_contents($lockFile);
+                $lockFile = getcwd() . '/.mage/' . $this->getConfig()->getEnvironment() . '.lock';
+                if (file_exists($lockFile)) {
+                    Console::output('<red>This environment is locked!</red>', 1, 2);
+                    echo file_get_contents($lockFile);
 
-                        return 103;
-                    }
+                    return 103;
+                }
 
-                    $releaseId = $this->getConfig()->getParameter('release', '');
-                    $this->getConfig()->setReleaseId($releaseId);
-                    $task = Factory::get('releases/rollback', $this->getConfig());
-                    $task->init();
-                    $result = $task->run() && $result;
-                    break;
+                $releaseId = $this->getConfig()->getParameter('release', '');
+                $this->getConfig()->setReleaseId($releaseId);
+                $task = Factory::get('releases/rollback', $this->getConfig());
+                $task->init();
+                $result = $task->run() && $result;
+                break;
             }
         }
 

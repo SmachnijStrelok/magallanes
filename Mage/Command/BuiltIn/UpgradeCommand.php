@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Command\BuiltIn;
 
@@ -16,7 +16,7 @@ use Mage\Console;
 /**
  * Upgrades the Magallanes Version on the Local System
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class UpgradeCommand extends AbstractCommand
 {
@@ -24,13 +24,13 @@ class UpgradeCommand extends AbstractCommand
      * Source for downloading
      * @var string
      */
-    const DOWNLOAD = 'http://download.magephp.com/magallanes.{version}.tar.gz';
+    const DOWNLOAD = 'https://magephp.github.io/download/magallanes.{version}.tar.gz';
 
     /**
      * JSON for Upgrade
      * @var string
      */
-    const UPGRADE = 'http://download.magephp.com/upgrade.json';
+    const UPGRADE = 'https://magephp.github.io/download/upgrade.json';
 
     /**
      * Command for Upgrading Magallanes

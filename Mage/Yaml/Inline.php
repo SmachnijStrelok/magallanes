@@ -12,9 +12,9 @@
 namespace Mage\Yaml;
 
 use Mage\Yaml\Escaper;
-use Mage\Yaml\Unescaper;
-use Mage\Yaml\Exception\ParseException;
 use Mage\Yaml\Exception\DumpException;
+use Mage\Yaml\Exception\ParseException;
+use Mage\Yaml\Unescaper;
 
 /**
  * Inline implements a YAML parser/dumper for the YAML inline syntax.
@@ -55,23 +55,23 @@ class Inline
             return '';
         }
 
-        if (function_exists('mb_internal_encoding') && ((int)ini_get('mbstring.func_overload')) & 2) {
+        if (function_exists('mb_internal_encoding') && ((int) ini_get('mbstring.func_overload')) & 2) {
             $mbEncoding = mb_internal_encoding();
             mb_internal_encoding('ASCII');
         }
 
         $i = 0;
         switch ($value[0]) {
-            case '[':
-                $result = self::parseSequence($value, $i);
-                ++$i;
-                break;
-            case '{':
-                $result = self::parseMapping($value, $i);
-                ++$i;
-                break;
-            default:
-                $result = self::parseScalar($value, null, array('"', "'"), $i);
+        case '[':
+            $result = self::parseSequence($value, $i);
+            ++$i;
+            break;
+        case '{':
+            $result = self::parseMapping($value, $i);
+            ++$i;
+            break;
+        default:
+            $result = self::parseScalar($value, null, array('"', "'"), $i);
         }
 
         // some comments are allowed at the end
@@ -100,55 +100,55 @@ class Inline
     public static function dump($value, $exceptionOnInvalidType = false, $objectSupport = false)
     {
         switch (true) {
-            case is_resource($value):
-                if ($exceptionOnInvalidType) {
-                    throw new DumpException(sprintf('Unable to dump PHP resources in a YAML file ("%s").', get_resource_type($value)));
-                }
+        case is_resource($value):
+            if ($exceptionOnInvalidType) {
+                throw new DumpException(sprintf('Unable to dump PHP resources in a YAML file ("%s").', get_resource_type($value)));
+            }
 
-                return 'null';
-            case is_object($value):
-                if ($objectSupport) {
-                    return '!!php/object:' . serialize($value);
-                }
+            return 'null';
+        case is_object($value):
+            if ($objectSupport) {
+                return '!!php/object:' . serialize($value);
+            }
 
-                if ($exceptionOnInvalidType) {
-                    throw new DumpException('Object support when dumping a YAML file has been disabled.');
-                }
+            if ($exceptionOnInvalidType) {
+                throw new DumpException('Object support when dumping a YAML file has been disabled.');
+            }
 
-                return 'null';
-            case is_array($value):
-                return self::dumpArray($value, $exceptionOnInvalidType, $objectSupport);
-            case null === $value:
-                return 'null';
-            case true === $value:
-                return 'true';
-            case false === $value:
-                return 'false';
-            case ctype_digit($value):
-                return is_string($value) ? "'$value'" : (int)$value;
-            case is_numeric($value):
-                $locale = setlocale(LC_NUMERIC, 0);
-                if (false !== $locale) {
-                    setlocale(LC_NUMERIC, 'C');
-                }
-                $repr = is_string($value) ? "'$value'" : (is_infinite($value) ? str_ireplace('INF', '.Inf', strval($value)) : strval($value));
+            return 'null';
+        case is_array($value):
+            return self::dumpArray($value, $exceptionOnInvalidType, $objectSupport);
+        case null === $value:
+            return 'null';
+        case true === $value:
+            return 'true';
+        case false === $value:
+            return 'false';
+        case ctype_digit($value):
+            return is_string($value) ? "'$value'" : (int) $value;
+        case is_numeric($value):
+            $locale = setlocale(LC_NUMERIC, 0);
+            if (false !== $locale) {
+                setlocale(LC_NUMERIC, 'C');
+            }
+            $repr = is_string($value) ? "'$value'" : (is_infinite($value) ? str_ireplace('INF', '.Inf', strval($value)) : strval($value));
 
-                if (false !== $locale) {
-                    setlocale(LC_NUMERIC, $locale);
-                }
+            if (false !== $locale) {
+                setlocale(LC_NUMERIC, $locale);
+            }
 
-                return $repr;
-            case Escaper::requiresDoubleQuoting($value):
-                return Escaper::escapeWithDoubleQuotes($value);
-            case Escaper::requiresSingleQuoting($value):
-                return Escaper::escapeWithSingleQuotes($value);
-            case '' == $value:
-                return "''";
-            case preg_match(self::getTimestampRegex(), $value):
-            case in_array(strtolower($value), array('null', '~', 'true', 'false')):
-                return "'$value'";
-            default:
-                return $value;
+            return $repr;
+        case Escaper::requiresDoubleQuoting($value):
+            return Escaper::escapeWithDoubleQuotes($value);
+        case Escaper::requiresSingleQuoting($value):
+            return Escaper::escapeWithSingleQuotes($value);
+        case '' == $value:
+            return "''";
+        case preg_match(self::getTimestampRegex(), $value):
+        case in_array(strtolower($value), array('null', '~', 'true', 'false')):
+            return "'$value'";
+        default:
+            return $value;
         }
     }
 
@@ -167,8 +167,8 @@ class Inline
         $keys = array_keys($value);
         if ((1 == count($keys) && '0' == $keys[0])
             || (count($keys) > 1 && array_reduce($keys, function ($v, $w) {
-                    return (int)$v + $w;
-                }, 0) == count($keys) * (count($keys) - 1) / 2)
+                return (int) $v + $w;
+            }, 0) == count($keys) * (count($keys) - 1) / 2)
         ) {
             $output = array();
             foreach ($value as $val) {
@@ -286,35 +286,35 @@ class Inline
         // [foo, bar, ...]
         while ($i < $len) {
             switch ($sequence[$i]) {
-                case '[':
-                    // nested sequence
-                    $output[] = self::parseSequence($sequence, $i);
-                    break;
-                case '{':
-                    // nested mapping
-                    $output[] = self::parseMapping($sequence, $i);
-                    break;
-                case ']':
-                    return $output;
-                case ',':
-                case ' ':
-                    break;
-                default:
-                    $isQuoted = in_array($sequence[$i], array('"', "'"));
-                    $value = self::parseScalar($sequence, array(',', ']'), array('"', "'"), $i);
+            case '[':
+                // nested sequence
+                $output[] = self::parseSequence($sequence, $i);
+                break;
+            case '{':
+                // nested mapping
+                $output[] = self::parseMapping($sequence, $i);
+                break;
+            case ']':
+                return $output;
+            case ',':
+            case ' ':
+                break;
+            default:
+                $isQuoted = in_array($sequence[$i], array('"', "'"));
+                $value = self::parseScalar($sequence, array(',', ']'), array('"', "'"), $i);
 
-                    if (!$isQuoted && false !== strpos($value, ': ')) {
-                        // embedded mapping?
-                        try {
-                            $value = self::parseMapping('{' . $value . '}');
-                        } catch (\InvalidArgumentException $e) {
-                            // no, it's not
-                        }
+                if (!$isQuoted && false !== strpos($value, ': ')) {
+                    // embedded mapping?
+                    try {
+                        $value = self::parseMapping('{' . $value . '}');
+                    } catch (\InvalidArgumentException $e) {
+                        // no, it's not
                     }
+                }
 
-                    $output[] = $value;
+                $output[] = $value;
 
-                    --$i;
+                --$i;
             }
 
             ++$i;
@@ -342,16 +342,16 @@ class Inline
         // {foo: bar, bar:foo, ...}
         while ($i < $len) {
             switch ($mapping[$i]) {
-                case ' ':
-                case ',':
-                    ++$i;
-                    continue 2;
-                case '}':
-                    if (self::$objectForMap) {
-                        return (object)$output;
-                    }
+            case ' ':
+            case ',':
+                ++$i;
+                continue 2;
+            case '}':
+                if (self::$objectForMap) {
+                    return (object) $output;
+                }
 
-                    return $output;
+                return $output;
             }
 
             // key
@@ -362,41 +362,41 @@ class Inline
 
             while ($i < $len) {
                 switch ($mapping[$i]) {
-                    case '[':
-                        // nested sequence
-                        $value = self::parseSequence($mapping, $i);
-                        // Spec: Keys MUST be unique; first one wins.
-                        // Parser cannot abort this mapping earlier, since lines
-                        // are processed sequentially.
-                        if (!isset($output[$key])) {
-                            $output[$key] = $value;
-                        }
-                        $done = true;
-                        break;
-                    case '{':
-                        // nested mapping
-                        $value = self::parseMapping($mapping, $i);
-                        // Spec: Keys MUST be unique; first one wins.
-                        // Parser cannot abort this mapping earlier, since lines
-                        // are processed sequentially.
-                        if (!isset($output[$key])) {
-                            $output[$key] = $value;
-                        }
-                        $done = true;
-                        break;
-                    case ':':
-                    case ' ':
-                        break;
-                    default:
-                        $value = self::parseScalar($mapping, array(',', '}'), array('"', "'"), $i);
-                        // Spec: Keys MUST be unique; first one wins.
-                        // Parser cannot abort this mapping earlier, since lines
-                        // are processed sequentially.
-                        if (!isset($output[$key])) {
-                            $output[$key] = $value;
-                        }
-                        $done = true;
-                        --$i;
+                case '[':
+                    // nested sequence
+                    $value = self::parseSequence($mapping, $i);
+                    // Spec: Keys MUST be unique; first one wins.
+                    // Parser cannot abort this mapping earlier, since lines
+                    // are processed sequentially.
+                    if (!isset($output[$key])) {
+                        $output[$key] = $value;
+                    }
+                    $done = true;
+                    break;
+                case '{':
+                    // nested mapping
+                    $value = self::parseMapping($mapping, $i);
+                    // Spec: Keys MUST be unique; first one wins.
+                    // Parser cannot abort this mapping earlier, since lines
+                    // are processed sequentially.
+                    if (!isset($output[$key])) {
+                        $output[$key] = $value;
+                    }
+                    $done = true;
+                    break;
+                case ':':
+                case ' ':
+                    break;
+                default:
+                    $value = self::parseScalar($mapping, array(',', '}'), array('"', "'"), $i);
+                    // Spec: Keys MUST be unique; first one wins.
+                    // Parser cannot abort this mapping earlier, since lines
+                    // are processed sequentially.
+                    if (!isset($output[$key])) {
+                        $output[$key] = $value;
+                    }
+                    $done = true;
+                    --$i;
                 }
 
                 ++$i;
@@ -423,58 +423,58 @@ class Inline
         $scalar = trim($scalar);
         $scalarLower = strtolower($scalar);
         switch (true) {
-            case 'null' === $scalarLower:
-            case '' === $scalar:
-            case '~' === $scalar:
+        case 'null' === $scalarLower:
+        case '' === $scalar:
+        case '~' === $scalar:
+            /** @noinspection PhpInconsistentReturnPointsInspection */
+            return;
+        case 'true' === $scalarLower:
+            return true;
+        case 'false' === $scalarLower:
+            return false;
+        // Optimise for returning strings.
+        /** @noinspection PhpMissingBreakStatementInspection */
+        case $scalar[0] === '+' || $scalar[0] === '-' || $scalar[0] === '.' || $scalar[0] === '!' || is_numeric($scalar[0]):
+            switch (true) {
+            case 0 === strpos($scalar, '!str'):
+                return (string) substr($scalar, 5);
+            case 0 === strpos($scalar, '! '):
+                return intval(self::parseScalar(substr($scalar, 2)));
+            case 0 === strpos($scalar, '!!php/object:'):
+                if (self::$objectSupport) {
+                    return unserialize(substr($scalar, 13));
+                }
+
+                if (self::$exceptionOnInvalidType) {
+                    throw new ParseException('Object support when parsing a YAML file has been disabled.');
+                }
+
                 /** @noinspection PhpInconsistentReturnPointsInspection */
                 return;
-            case 'true' === $scalarLower:
-                return true;
-            case 'false' === $scalarLower:
-                return false;
-            // Optimise for returning strings.
-            /** @noinspection PhpMissingBreakStatementInspection */
-            case $scalar[0] === '+' || $scalar[0] === '-' || $scalar[0] === '.' || $scalar[0] === '!' || is_numeric($scalar[0]):
-                switch (true) {
-                    case 0 === strpos($scalar, '!str'):
-                        return (string)substr($scalar, 5);
-                    case 0 === strpos($scalar, '! '):
-                        return intval(self::parseScalar(substr($scalar, 2)));
-                    case 0 === strpos($scalar, '!!php/object:'):
-                        if (self::$objectSupport) {
-                            return unserialize(substr($scalar, 13));
-                        }
+            case ctype_digit($scalar):
+                $raw = $scalar;
+                $cast = intval($scalar);
 
-                        if (self::$exceptionOnInvalidType) {
-                            throw new ParseException('Object support when parsing a YAML file has been disabled.');
-                        }
+                return '0' == $scalar[0] ? octdec($scalar) : (((string) $raw == (string) $cast) ? $cast : $raw);
+            case '-' === $scalar[0] && ctype_digit(substr($scalar, 1)):
+                $raw = $scalar;
+                $cast = intval($scalar);
 
-                        /** @noinspection PhpInconsistentReturnPointsInspection */
-                        return;
-                    case ctype_digit($scalar):
-                        $raw = $scalar;
-                        $cast = intval($scalar);
-
-                        return '0' == $scalar[0] ? octdec($scalar) : (((string)$raw == (string)$cast) ? $cast : $raw);
-                    case '-' === $scalar[0] && ctype_digit(substr($scalar, 1)):
-                        $raw = $scalar;
-                        $cast = intval($scalar);
-
-                        return '0' == $scalar[1] ? octdec($scalar) : (((string)$raw == (string)$cast) ? $cast : $raw);
-                    case is_numeric($scalar):
-                        return '0x' == $scalar[0] . $scalar[1] ? hexdec($scalar) : floatval($scalar);
-                    case '.inf' === $scalarLower:
-                    case '.nan' === $scalarLower:
-                        return -log(0);
-                    case '-.inf' === $scalarLower:
-                        return log(0);
-                    case preg_match('/^(-|\+)?[0-9,]+(\.[0-9]+)?$/', $scalar):
-                        return floatval(str_replace(',', '', $scalar));
-                    case preg_match(self::getTimestampRegex(), $scalar):
-                        return strtotime($scalar);
-                }
-            default:
-                return (string)$scalar;
+                return '0' == $scalar[1] ? octdec($scalar) : (((string) $raw == (string) $cast) ? $cast : $raw);
+            case is_numeric($scalar):
+                return '0x' == $scalar[0] . $scalar[1] ? hexdec($scalar) : floatval($scalar);
+            case '.inf' === $scalarLower:
+            case '.nan' === $scalarLower:
+                return -log(0);
+            case '-.inf' === $scalarLower:
+                return log(0);
+            case preg_match('/^(-|\+)?[0-9,]+(\.[0-9]+)?$/', $scalar):
+                return floatval(str_replace(',', '', $scalar));
+            case preg_match(self::getTimestampRegex(), $scalar):
+                return strtotime($scalar);
+            }
+        default:
+            return (string) $scalar;
         }
     }
 

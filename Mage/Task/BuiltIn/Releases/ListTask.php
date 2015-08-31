@@ -1,24 +1,24 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Releases;
 
+use DateTime;
 use Mage\Console;
 use Mage\Task\AbstractTask;
 use Mage\Task\Releases\IsReleaseAware;
-use DateTime;
 
 /**
  * Task for Listing Available Releases on an Environment
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class ListTask extends AbstractTask implements IsReleaseAware
 {
@@ -59,16 +59,16 @@ class ListTask extends AbstractTask implements IsReleaseAware
                     $release = trim($release);
                     $releaseIndex = str_pad($releaseIndex * -1, 2, ' ', STR_PAD_LEFT);
                     $releaseDate = $release[0] . $release[1] . $release[2] . $release[3]
-                        . '-'
-                        . $release[4] . $release[5]
-                        . '-'
-                        . $release[6] . $release[7]
-                        . ' '
-                        . $release[8] . $release[9]
-                        . ':'
-                        . $release[10] . $release[11]
-                        . ':'
-                        . $release[12] . $release[13];
+                    . '-'
+                    . $release[4] . $release[5]
+                    . '-'
+                    . $release[6] . $release[7]
+                    . ' '
+                    . $release[8] . $release[9]
+                    . ':'
+                    . $release[10] . $release[11]
+                    . ':'
+                    . $release[12] . $release[13];
 
                     $isCurrent = '';
                     if ($currentRelease == $release) {

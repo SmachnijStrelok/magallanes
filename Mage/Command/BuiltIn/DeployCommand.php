@@ -1,44 +1,45 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-* (c) Alex V Kotelnikov <gudron@gudron.me>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ * (c) Alex V Kotelnikov <gudron@gudron.me>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Command\BuiltIn;
 
+use Exception;
 use Mage\Command\AbstractCommand;
 use Mage\Command\RequiresEnvironment;
-use Mage\Task\Factory;
+use Mage\Config;
+use Mage\Console;
+use Mage\Mailer;
 use Mage\Task\AbstractTask;
-use Mage\Task\Releases\SkipOnOverride;
 use Mage\Task\ErrorWithMessageException;
+use Mage\Task\Factory;
+use Mage\Task\Releases\SkipOnOverride;
 use Mage\Task\RollbackException;
 use Mage\Task\SkipException;
-use Mage\Console;
-use Mage\Config;
-use Mage\Mailer;
-use Exception;
 
 /**
  * Command for Deploying
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class DeployCommand extends AbstractCommand implements RequiresEnvironment
 {
-    const DEFAULT_RELEASE_IS_ENABLED = false;
-    const DEPLOY_STRATEGY_DISABLED = 'disabled';
-    const DEPLOY_STRATEGY_RSYNC = 'rsync';
-    const DEPLOY_STRATEGY_TARGZ = 'targz';
-    const DEPLOY_STRATEGY_GIT_REBASE = 'git-rebase';
-    const DEPLOY_STRATEGY_GIT_REMOTE_CACHE = 'git-remote-cache';
-    const DEPLOY_STRATEGY_GUESS = 'guess';
-    const DEFAULT_DEPLOY_STRATEGY = self::DEPLOY_STRATEGY_GUESS;
+    const DEFAULT_RELEASE_IS_ENABLED         = false;
+    const DEPLOY_STRATEGY_DISABLED           = 'disabled';
+    const DEPLOY_STRATEGY_RSYNC              = 'rsync';
+    const DEPLOY_STRATEGY_TARGZ              = 'targz';
+    const DEPLOY_STRATEGY_GIT_REBASE         = 'git-rebase';
+    const DEPLOY_STRATEGY_GIT_REMOTE_CACHE   = 'git-remote-cache';
+    const DEPLOY_STRATEGY_RSYNC_REMOTE_CACHE = 'rsync-remote-cache';
+    const DEPLOY_STRATEGY_GUESS              = 'guess';
+    const DEFAULT_DEPLOY_STRATEGY            = self::DEPLOY_STRATEGY_GUESS;
 
     /**
      * Deploy has Failed
@@ -64,7 +65,7 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
      */
     public $acceptedStagesToRollback = array(
         AbstractTask::STAGE_POST_RELEASE,
-        AbstractTask::STAGE_POST_DEPLOY
+        AbstractTask::STAGE_POST_DEPLOY,
     );
 
     /**
@@ -209,11 +210,11 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
         if (self::$failedTasks === 0) {
             $exitCode = 0;
         }
-        
+
         if (self::$deployStatus === self::FAILED) {
             $exitCode = 1;
         }
-        
+
         return $exitCode;
     }
 
@@ -226,7 +227,7 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
      */
     protected function runNonDeploymentTasks($stage, Config $config, $title)
     {
-        $tasksToRun = $config->getTasks($stage);
+        $tasksToRun        = $config->getTasks($stage);
         self::$failedTasks = 0;
 
         // PreDeployment Hook
@@ -266,7 +267,7 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
         } else {
             Console::output('Starting <bold>' . $title . '</bold> tasks:');
 
-            $tasks = 0;
+            $tasks          = 0;
             $completedTasks = 0;
 
             foreach ($tasksToRun as $taskData) {
@@ -297,8 +298,8 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
         }
 
         // Run Tasks for Deployment
-        $hosts = $this->getConfig()->getHosts();
-        $this->hostsCount = count($hosts);
+        $hosts             = $this->getConfig()->getHosts();
+        $this->hostsCount  = count($hosts);
         self::$failedTasks = 0;
 
         if ($this->hostsCount == 0) {
@@ -306,12 +307,11 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
         } else {
             $this->startTimeHosts = time();
             foreach ($hosts as $hostKey => $host) {
-
                 // Check if Host has specific configuration
                 $hostConfig = null;
                 if (is_array($host)) {
                     $hostConfig = $host;
-                    $host = $hostKey;
+                    $host       = $hostKey;
                 }
 
                 // Set Host and Host Specific Config
@@ -319,7 +319,7 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
                 $this->getConfig()->setHostConfig($hostConfig);
 
                 // Prepare Tasks
-                $tasks = 0;
+                $tasks          = 0;
                 $completedTasks = 0;
 
                 Console::output('Deploying to <bold>' . $this->getConfig()->getHost() . '</bold>');
@@ -371,12 +371,11 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
                 Console::output('Starting the <bold>Releasing</bold>');
                 $completedTasks = 0;
                 foreach ($hosts as $hostKey => $host) {
-
                     // Check if Host has specific configuration
                     $hostConfig = null;
                     if (is_array($host)) {
                         $hostConfig = $host;
-                        $host = $hostKey;
+                        $host       = $hostKey;
                     }
 
                     // Set Host
@@ -396,20 +395,19 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
 
                 // Execute the Post-Release Tasks
                 foreach ($hosts as $hostKey => $host) {
-
                     // Check if Host has specific configuration
                     $hostConfig = null;
                     if (is_array($host)) {
                         $hostConfig = $host;
-                        $host = $hostKey;
+                        $host       = $hostKey;
                     }
 
                     // Set Host
                     $this->getConfig()->setHost($host);
                     $this->getConfig()->setHostConfig($hostConfig);
 
-                    $tasksToRun = $this->getConfig()->getTasks(AbstractTask::STAGE_POST_RELEASE);
-                    $tasks = count($tasksToRun);
+                    $tasksToRun     = $this->getConfig()->getTasks(AbstractTask::STAGE_POST_RELEASE);
+                    $tasks          = count($tasksToRun);
                     $completedTasks = 0;
 
                     if (count($tasksToRun) > 0) {
@@ -458,7 +456,7 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
                 $hostConfig = null;
                 if (is_array($host)) {
                     $hostConfig = $host;
-                    $host = $hostKey;
+                    $host       = $hostKey;
                 }
 
                 // Set Host and Host Specific Config
@@ -467,9 +465,9 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
                 $this->getConfig()->setReleaseId(-1);
 
                 $task = Factory::get(array(
-                        'name'=>'releases/rollback',
-                        'parameters' => array('inDeploy'=>true)
-                    ),
+                    'name'       => 'releases/rollback',
+                    'parameters' => array('inDeploy' => true),
+                ),
                     $this->getConfig(),
                     false,
                     $task->getStage()
@@ -544,9 +542,9 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
      */
     protected function transcurredTime($time)
     {
-        $hours = floor($time / 3600);
-        $minutes = floor(($time - ($hours * 3600)) / 60);
-        $seconds = $time - ($minutes * 60) - ($hours * 3600);
+        $hours    = floor($time / 3600);
+        $minutes  = floor(($time - ($hours * 3600)) / 60);
+        $seconds  = $time - ($minutes * 60) - ($hours * 3600);
         $timeText = array();
 
         if ($hours > 0) {
@@ -571,8 +569,8 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
      */
     protected function sendNotification($result)
     {
-        $projectName = $this->getConfig()->general('name', false);
-        $projectEmail = $this->getConfig()->general('email', false);
+        $projectName          = $this->getConfig()->general('name', false);
+        $projectEmail         = $this->getConfig()->general('email', false);
         $notificationsEnabled = $this->getConfig()->general('notifications', false);
 
         // We need notifications enabled, and a project name and email to send the notification
@@ -615,6 +613,10 @@ class DeployCommand extends AbstractCommand implements RequiresEnvironment
 
             case self::DEPLOY_STRATEGY_GIT_REMOTE_CACHE:
                 $deployStrategy = 'deployment/strategy/git-remote-cache';
+                break;
+
+            case self::DEPLOY_STRATEGY_RSYNC_REMOTE_CACHE:
+                $deployStrategy = 'deployment/strategy/rsync-remote-cache';
                 break;
 
             case self::DEPLOY_STRATEGY_GUESS:

@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Deployment\Strategy;
 
@@ -16,7 +16,7 @@ use Mage\Task\Releases\IsReleaseAware;
 /**
  * Task for Sync the Local Code to the Remote Hosts via Tar GZ
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class TarGzTask extends BaseStrategyTaskAbstract implements IsReleaseAware
 {
@@ -46,16 +46,15 @@ class TarGzTask extends BaseStrategyTaskAbstract implements IsReleaseAware
         $this->checkOverrideRelease();
 
         $excludes = $this->getExcludes();
-        $excludesListFilePath   = $this->getConfig()->deployment('excludes_file', '');
-        ;
+        $excludesListFilePath = $this->getConfig()->deployment('excludes_file', '');
 
         // If we are working with releases
         $deployToDirectory = $this->getConfig()->deployment('to');
         if ($this->getConfig()->release('enabled', false) === true) {
             $releasesDirectory = $this->getConfig()->release('directory', 'releases');
             $deployToDirectory = rtrim($this->getConfig()->deployment('to'), '/')
-                . '/' . $releasesDirectory
-                . '/' . $this->getConfig()->getReleaseId();
+            . '/' . $releasesDirectory
+            . '/' . $this->getConfig()->getReleaseId();
             $output = null;
             $this->runCommandRemote('mkdir -p ' . $deployToDirectory, $output, false);
         }
@@ -81,7 +80,7 @@ class TarGzTask extends BaseStrategyTaskAbstract implements IsReleaseAware
         // remove h option only if dump-symlinks is allowed in the release config part
         $dumpSymlinks = $this->getConfig()->release('dump-symlinks') ? '' : 'h';
 
-        $command = 'tar cfz'. $dumpSymlinks . $strategyFlags . ' ' . $localTarGz . '.tar.gz ' . $excludeCmd . $excludeFromFileCmd . ' -C ' . $this->getConfig()->deployment('from') . ' .';
+        $command = 'tar cfz' . $dumpSymlinks . $strategyFlags . ' ' . $localTarGz . '.tar.gz ' . $excludeCmd . $excludeFromFileCmd . ' -C ' . $this->getConfig()->deployment('from') . ' .';
         $result = $this->runCommandLocal($command);
 
         // Strategy Flags
@@ -94,11 +93,11 @@ class TarGzTask extends BaseStrategyTaskAbstract implements IsReleaseAware
 
         // Copy Tar Gz  to Remote Host
         $command = 'scp ' . $strategyFlags . ' ' . $this->getConfig()->getHostIdentityFileOption()
-            . $this->getConfig()->getConnectTimeoutOption() . '-P ' . $this->getConfig()->getHostPort()
-            . " -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
-            . ' ' . $localTarGz . '.tar.gz '
-            . $this->getConfig()->deployment('user') . '@' . $this->getConfig()->getHostName() . ':'
-            . $deployToDirectory;
+        . $this->getConfig()->getConnectTimeoutOption() . '-P ' . $this->getConfig()->getHostPort()
+        . " -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "
+        . ' ' . $localTarGz . '.tar.gz '
+        . $this->getConfig()->deployment('user') . '@' . $this->getConfig()->getHostName() . ':'
+        . $deployToDirectory;
         $result = $this->runCommandLocal($command) && $result;
 
         // Strategy Flags

@@ -1,26 +1,25 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage;
 
+use Exception;
 use Mage\Command\Factory;
 use Mage\Command\RequiresEnvironment;
 use Mage\Console\Colors;
-use Exception;
 use RecursiveDirectoryIterator;
-use SplFileInfo;
 
 /**
  * Magallanes interface between the Tasks and Commands and the User's Console.
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class Console
 {
@@ -179,12 +178,12 @@ class Console
 
         if (!self::$verboseLogEnabled) {
             self::$screenBuffer .= str_repeat("\t", $tabs)
-                . strip_tags($message)
-                . str_repeat(PHP_EOL, $newLine);
+            . strip_tags($message)
+            . str_repeat(PHP_EOL, $newLine);
 
             $output = str_repeat("\t", $tabs)
-                . Colors::color($message, self::$config)
-                . str_repeat(PHP_EOL, $newLine);
+            . Colors::color($message, self::$config)
+            . str_repeat(PHP_EOL, $newLine);
 
             echo $output;
         }
@@ -303,7 +302,7 @@ class Console
     protected static function isVerboseLoggingEnabled()
     {
         return self::$config->getParameter('verbose', false)
-            || self::$config->general('verbose_logging')
-            || self::$config->environmentConfig('verbose_logging', false);
+        || self::$config->general('verbose_logging')
+        || self::$config->environmentConfig('verbose_logging', false);
     }
 }

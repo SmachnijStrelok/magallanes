@@ -1,12 +1,12 @@
 <?php
 /*
  * This file is part of the Magallanes package.
-*
-* (c) Andrés Montañez <andres@andresmontanez.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Mage\Task\BuiltIn\Deployment\Strategy;
 
@@ -17,7 +17,7 @@ use Mage\Task\Releases\IsReleaseAware;
 /**
  * Task for Sync the Local Code to the Remote Hosts via RSYNC
  *
- * @author Andrés Montañez <andres@andresmontanez.com>
+ * @author J.Moriarty <moriarty@codefelony.com>
  */
 class RsyncTask extends BaseStrategyTaskAbstract implements IsReleaseAware
 {
@@ -62,8 +62,8 @@ class RsyncTask extends BaseStrategyTaskAbstract implements IsReleaseAware
 
             $currentRelease = false;
             $deployToDirectory = rtrim($this->getConfig()->deployment('to'), '/')
-                               . '/' . $releasesDirectory
-                               . '/' . $this->getConfig()->getReleaseId();
+            . '/' . $releasesDirectory
+            . '/' . $this->getConfig()->getReleaseId();
 
             Console::log('Deploy to ' . $deployToDirectory);
             $resultFetch = $this->runCommandRemote('ls -ld ' . $symlink . ' | cut -d"/" -f2', $currentRelease);
@@ -76,7 +76,7 @@ class RsyncTask extends BaseStrategyTaskAbstract implements IsReleaseAware
                 if ($rsync_copy && is_array($rsync_copy) && $rsync_copy['copy'] && $this->runCommandRemote('test -d ' . $releasesDirectory . '/' . $currentRelease)) {
                     if (isset($rsync_copy['copy_tool_rsync'])) {
                         $this->runCommandRemote("rsync -a {$this->excludes(array_merge($excludes, $rsync_copy['rsync_excludes']))} "
-                                          . "$releasesDirectory/$currentRelease/ $releasesDirectory/{$this->getConfig()->getReleaseId()}");
+                            . "$releasesDirectory/$currentRelease/ $releasesDirectory/{$this->getConfig()->getReleaseId()}");
                     } else {
                         $this->runCommandRemote('cp -R ' . $releasesDirectory . '/' . $currentRelease . ' ' . $releasesDirectory . '/' . $this->getConfig()->getReleaseId());
                     }
@@ -95,13 +95,13 @@ class RsyncTask extends BaseStrategyTaskAbstract implements IsReleaseAware
         }
 
         $command = 'rsync -avz '
-                 . $strategyFlags . ' '
-                 . '--rsh="ssh ' . $this->getConfig()->getHostIdentityFileOption() . '-p' . $this->getConfig()->getHostPort() . '" '
-                 . $this->excludes($excludes) . ' '
-                 . $this->excludesListFile($excludesListFilePath) . ' '
-                 . $this->getConfig()->deployment('from') . ' '
-                 . ($this->getConfig()->deployment('user') ? $this->getConfig()->deployment('user') . '@' : '')
-                 . $this->getConfig()->getHostName() . ':' . $deployToDirectory;
+        . $strategyFlags . ' '
+        . '--rsh="ssh ' . $this->getConfig()->getHostIdentityFileOption() . '-p' . $this->getConfig()->getHostPort() . '" '
+        . $this->excludes($excludes) . ' '
+        . $this->excludesListFile($excludesListFilePath) . ' '
+        . $this->getConfig()->deployment('from') . ' '
+        . ($this->getConfig()->deployment('user') ? $this->getConfig()->deployment('user') . '@' : '')
+        . $this->getConfig()->getHostName() . ':' . $deployToDirectory;
 
         $result = $this->runCommandLocal($command);
 
@@ -113,7 +113,7 @@ class RsyncTask extends BaseStrategyTaskAbstract implements IsReleaseAware
      * @param array $excludes
      * @return string
      */
-    protected function excludes(Array $excludes)
+    protected function excludes(array $excludes)
     {
         $excludesRsync = '';
         foreach ($excludes as $exclude) {

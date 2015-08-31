@@ -1,8 +1,17 @@
 <?php
+
+/**
+ * This file is part of the Magallanes package.
+ *
+ * (c) J.Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Mage\Task\BuiltIn\Deployment\Strategy;
 
 use Mage\Console;
-use Mage\Task\AbstractTask;
 use Mage\Task\Releases\IsReleaseAware;
 
 /**
@@ -15,7 +24,7 @@ use Mage\Task\Releases\IsReleaseAware;
  * start using it.
  *
  * @package Mage\Task\BuiltIn\Deployment\Strategy
- * @author Mario Mueller <mueller@freshcells.de>, J.Moriarty <moriarty@codefelony.com>
+ * @author James Moriarty <moriarty@codefelony.com>
  */
 class GitRemoteCacheTask extends BaseStrategyTaskAbstract implements IsReleaseAware
 {
@@ -52,22 +61,22 @@ class GitRemoteCacheTask extends BaseStrategyTaskAbstract implements IsReleaseAw
         $deployToDirectory = $this->getConfig()->deployment('to');
         if ($this->getConfig()->release('enabled', false) === true) {
             $releasesDirectory = $this->getConfig()->release('directory', 'releases');
-            $symlink = $this->getConfig()->release('symlink', 'public');
+            $symlink           = $this->getConfig()->release('symlink', 'current');
 
-            $currentRelease = false;
+            $currentRelease    = false;
             $deployToDirectory = rtrim($deployToDirectory, '/') . '/' . $releasesDirectory . '/' . $this->getConfig()->getReleaseId();
             Console::log('Deploy to ' . $deployToDirectory);
             $resultFetch = $this->runCommandRemote('ls -ld ' . $symlink . ' | cut -d"/" -f2', $currentRelease);
 
             if ($resultFetch && $currentRelease) {
-                // If deployment configuration is rsync, include a flag to simply sync the deltas between the prior release
-                // rsync: { copy: yes }
-                $rsync_copy = $this->getConfig()->extras('vcs', 'rsync');
+                // If deployment configuration is rsync, include a flag to
+                // simply sync the deltas between the prior release
+                $rsync_copy = $this->getConfig()->extras('vcs', 'rsync'); // rsync: { copy: yes }
                 // If copy_tool_rsync, use rsync rather than cp for finer control of what is copied
                 if ($rsync_copy && is_array($rsync_copy) && $rsync_copy['copy'] && $this->runCommandRemote('test -d ' . $releasesDirectory . '/' . $currentRelease)) {
                     if (isset($rsync_copy['copy_tool_rsync'])) {
                         $this->runCommandRemote("rsync -a {$this->excludes(array_merge($excludes, $rsync_copy['rsync_excludes']))} "
-                                          . "$releasesDirectory/$currentRelease/ $releasesDirectory/{$this->getConfig()->getReleaseId()}");
+                            . "$releasesDirectory/$currentRelease/ $releasesDirectory/{$this->getConfig()->getReleaseId()}");
                     } else {
                         $this->runCommandRemote('cp -R ' . $releasesDirectory . '/' . $currentRelease . ' ' . $releasesDirectory . '/' . $this->getConfig()->getReleaseId());
                     }
@@ -80,33 +89,33 @@ class GitRemoteCacheTask extends BaseStrategyTaskAbstract implements IsReleaseAw
         $branch = $this->getConfig()->extras('vcs', 'branch', 'master');
         $remote = $this->getConfig()->extras('vcs', 'remote', 'origin');
 
-	$sharedDirectory = $this->getConfig()->extras('directory', 'top', 'shared');
-	$cacheDirectory = $this->getConfig()->extras('vcs', 'directory', 'git-remote-cache');
+        $sharedDirectory   = $this->getConfig()->extras('directory', 'top', 'shared');
+        $cacheDirectory    = $this->getConfig()->extras('vcs', 'directory', 'git-remote-cache');
         $remoteCacheFolder = rtrim($this->getConfig()->deployment('to'), '/')
-            . '/' . $sharedDirectory
-            . '/' . $cacheDirectory;
-	$this->runCommandRemote('mkdir -p ' . $remoteCacheFolder);
+        . '/' . $sharedDirectory
+        . '/' . $cacheDirectory;
+        $this->runCommandRemote('mkdir -p ' . $remoteCacheFolder);
 
-	// Fetch Remote
-	$command = $this->getGitCacheAwareCommand('git fetch ' . $remote);
-	$result = $this->runCommandRemote($command);
+        // Fetch Remote
+        $command = $this->getGitCacheAwareCommand('git fetch ' . $remote);
+        $result  = $this->runCommandRemote($command);
 
         if ($result === false) {
             $repository = $this->getConfig()->extras('vcs', 'repository');
             if ($repository) {
                 $command = $this->getGitCacheAwareCommand('git clone --mirror ' . $repository . ' .');
-                $result = $this->runCommandRemote($command);
+                $result  = $this->runCommandRemote($command);
 
                 $command = $this->getGitCacheAwareCommand('git fetch ' . $remote);
-                $result = $this->runCommandRemote($command);
+                $result  = $this->runCommandRemote($command);
             }
         }
 
-	// Archive Remote
-	$command = $this->getGitCacheAwareCommand('git archive ' . $branch . ' | tar -x -C ' . $deployToDirectory);
-        $result = $this->runCommandRemote($command) && $result;
+        // Archive Remote
+        $command = $this->getGitCacheAwareCommand('git archive ' . $branch . ' | tar -x -C ' . $deployToDirectory);
+        $result  = $this->runCommandRemote($command) && $result;
 
-	return $result;
+        return $result;
     }
 
     /**
@@ -115,13 +124,13 @@ class GitRemoteCacheTask extends BaseStrategyTaskAbstract implements IsReleaseAw
      * @param string $property
      * @return string
      */
-    protected function vcs(Array $options, $chosen)
+    protected function vcs(array $options, $chosen)
     {
-	$vcsPropertyContent = null;
+        $vcsPropertyContent = null;
         foreach ($options as $properties) {
             foreach ($properties as $property) {
-		$vcsPropertyContent = $property[$chosen];
-	    }
+                $vcsPropertyContent = $property[$chosen];
+            }
         }
 
         return $vcsPropertyContent;
@@ -133,7 +142,7 @@ class GitRemoteCacheTask extends BaseStrategyTaskAbstract implements IsReleaseAw
      * @param string $property
      * @return string
      */
-    protected function rsync(Array $options, $chosen)
+    protected function rsync(array $options, $chosen)
     {
         $rsyncPropertyContent = null;
         foreach ($options as $properties) {

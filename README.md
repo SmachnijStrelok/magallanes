@@ -15,7 +15,7 @@ Simply add the following dependency to your project’s composer.json file:
 
 ```json
     "require-dev": {
-        "magephp/magallanes": "~1.0.7"
+        "magephp/magallanes": "~1.0"
     }
 ```
 Now tell we update the vendors:
