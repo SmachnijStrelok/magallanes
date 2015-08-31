@@ -24,3 +24,12 @@ script:
 
 after_script:
   - bin/coveralls -v
+
+branches:
+  only:
+    - master
+
+notifications:
+  email:
+    on_success: never
+    on_failure: never
