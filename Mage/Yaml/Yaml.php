@@ -59,7 +59,7 @@ class Yaml
                 throw new ParseException(sprintf('Unable to parse "%s" as the file is not readable.', $input));
             }
 
-            $file = $input;
+            $file  = $input;
             $input = file_get_contents($file);
         }
 
