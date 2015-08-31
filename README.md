@@ -1,5 +1,7 @@
 # Magallanes #
 
+[![Coverage Status](https://coveralls.io/repos/magephp/magallanes/badge.svg?branch=master&service=github)](https://coveralls.io/github/magephp/magallanes?branch=master) [![Build Status](https://travis-ci.org/magephp/magallanes.svg)](https://travis-ci.org/magephp/magallanes)
+
 ### What's Magallanes? ###
 Magallanes is a deployment tool for PHP applications; it's quite simple to use and manage.
 It will get your application to a safe harbor.
@@ -14,9 +16,9 @@ and run tasks for that freshly deployed code.
 Simply add the following dependency to your project’s composer.json file:
 
 ```json
-    "require-dev": {
-        "magephp/magallanes": "~1.1"
-    }
+"require-dev": {
+    "magephp/magallanes": "~1.1"
+}
 ```
 Now tell we update the vendors:
 
