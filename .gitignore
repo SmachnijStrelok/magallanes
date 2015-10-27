@@ -15,4 +15,8 @@ Thumbs.db
 .phpintel
 nbproject
 .tags*
+*.swp
+*.original
+*.disabled
+*.old
 magallanes.sublime-workspace

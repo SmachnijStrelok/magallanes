@@ -96,9 +96,9 @@ abstract class AbstractTask
      */
     final public function __construct(Config $config, $inRollback = false, $stage = null, $parameters = array())
     {
-        $this->config = $config;
+        $this->config     = $config;
         $this->inRollback = $inRollback;
-        $this->stage = $stage;
+        $this->stage      = $stage;
         $this->parameters = $parameters;
     }
 
@@ -162,6 +162,7 @@ abstract class AbstractTask
 
     /**
      * Runs a Shell Command Localy
+     *
      * @param string $command
      * @param string $output
      * @return boolean
@@ -173,6 +174,7 @@ abstract class AbstractTask
 
     /**
      * Runs a Shell Command on the Remote Host
+     *
      * @param string $command
      * @param string $output
      * @param boolean $cdToDirectoryFirst
@@ -216,6 +218,7 @@ abstract class AbstractTask
     /**
      * Runs a Shell Command Localy or in the Remote Host based on the Task Stage.
      * If the stage is "deploy" then it will be executed in the remote host.
+     *
      * @param string $command
      * @param string $output
      * @return boolean
@@ -230,7 +233,7 @@ abstract class AbstractTask
     }
 
     /**
-     * adds a cd to the needed release if we work with releases.
+     * Adds a cd to the needed release if we work with releases.
      *
      * @param string $command
      * @return string
@@ -258,7 +261,7 @@ abstract class AbstractTask
         if ($this->getConfig()->extras('enabled', 'top', false) === true) {
             if ($this->getConfig()->extras('vcs', 'enabled', false) === true) {
                 $sharedDirectory = $this->getConfig()->extras('directory', 'top', 'shared');
-                $cacheDirectory = $this->getConfig()->extras('vcs', 'directory', 'git-remote-cache');
+                $cacheDirectory  = $this->getConfig()->extras('vcs', 'directory', 'git-remote-cache');
 
                 $remoteCacheDirectory = $sharedDirectory . '/' . $cacheDirectory;
                 return 'cd ' . $remoteCacheDirectory . ' && ' . $command;
@@ -279,7 +282,7 @@ abstract class AbstractTask
         if ($this->getConfig()->extras('enabled', 'top', false) === true) {
             if ($this->getConfig()->extras('rsync', 'enabled', false) === true) {
                 $sharedDirectory = $this->getConfig()->extras('directory', 'top', 'shared');
-                $cacheDirectory = $this->getConfig()->extras('rsync', 'directory', 'rsync-remote-cache');
+                $cacheDirectory  = $this->getConfig()->extras('rsync', 'directory', 'rsync-remote-cache');
 
                 $remoteCacheDirectory = $sharedDirectory . '/' . $cacheDirectory;
                 return 'cd ' . $remoteCacheDirectory . ' && ' . $command;
@@ -297,25 +300,25 @@ abstract class AbstractTask
     {
         $result = true;
         // for given release, check if tarred
-        $output = '';
+        $output            = '';
         $releasesDirectory = $this->getConfig()->release('directory', 'releases');
 
-        $currentReleaseDirectory = $releasesDirectory . '/' . $releaseId;
+        $currentReleaseDirectory     = $releasesDirectory . '/' . $releaseId;
         $currentReleaseDirectoryTemp = $currentReleaseDirectory . '_tmp/';
-        $currentRelease = $currentReleaseDirectory . '/' . $releaseId . '.tar.gz';
+        $currentRelease              = $currentReleaseDirectory . '/' . $releaseId . '.tar.gz';
 
         $command = 'test -e ' . $currentRelease . ' && echo "true" || echo ""';
         $this->runCommandRemote($command, $output);
 
         // if not, do so
         if (!$output) {
-            $commands = array();
+            $commands   = array();
             $commands[] = 'mv ' . $currentReleaseDirectory . ' ' . $currentReleaseDirectoryTemp;
             $commands[] = 'mkdir ' . $currentReleaseDirectory;
             $commands[] = 'tar cfz ' . $currentRelease . ' ' . $currentReleaseDirectoryTemp;
             $commands[] = 'rm -rf ' . $currentReleaseDirectoryTemp;
-            $command = implode(' && ', $commands);
-            $result = $this->runCommandRemote($command, $output);
+            $command    = implode(' && ', $commands);
+            $result     = $this->runCommandRemote($command, $output);
             return $result;
         }
         return $result;
@@ -325,24 +328,24 @@ abstract class AbstractTask
     {
         $result = true;
         // for given release, check if tarred
-        $output = '';
+        $output            = '';
         $releasesDirectory = $this->getConfig()->release('directory', 'releases');
 
-        $currentReleaseDirectory = $releasesDirectory . '/' . $releaseId;
+        $currentReleaseDirectory     = $releasesDirectory . '/' . $releaseId;
         $currentReleaseDirectoryTemp = $currentReleaseDirectory . '_tmp/';
-        $currentRelease = $currentReleaseDirectory . '/' . $releaseId . '.tar.gz';
+        $currentRelease              = $currentReleaseDirectory . '/' . $releaseId . '.tar.gz';
 
         $command = 'test -e ' . $currentRelease . ' && echo "true" || echo ""';
         $this->runCommandRemote($command, $output);
 
         // if tarred, untar now
         if ($output) {
-            $commands = array();
+            $commands   = array();
             $commands[] = 'tar xfz ' . $currentRelease;
             $commands[] = 'rm -rf ' . $currentReleaseDirectory;
             $commands[] = 'mv ' . $currentReleaseDirectoryTemp . ' ' . $currentReleaseDirectory;
-            $command = implode(' && ', $commands);
-            $result = $this->runCommandRemote($command, $output);
+            $command    = implode(' && ', $commands);
+            $result     = $this->runCommandRemote($command, $output);
             return $result;
         }
         return $result;

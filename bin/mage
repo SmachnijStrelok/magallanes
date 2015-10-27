@@ -1,7 +1,15 @@
 #!/usr/bin/env php
 <?php
-
-if (empty(ini_get('date.timezone'))) {
+/*
+ * This file is part of the Magallanes package.
+ *
+ * (c) Moriarty <moriarty@codefelony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+$timezone = ini_get('date.timezone');
+if (empty($timezone)) {
     date_default_timezone_set('UTC');
 }
 

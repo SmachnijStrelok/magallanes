@@ -1,6 +1,6 @@
 # Magallanes #
 
-[![Coverage Status](https://coveralls.io/repos/magephp/magallanes/badge.svg?branch=master&service=github)](https://coveralls.io/github/magephp/magallanes?branch=master) [![Build Status](https://travis-ci.org/magephp/magallanes.svg)](https://travis-ci.org/magephp/magallanes)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4bd53bf6-4ca4-4b8c-a9f9-73611b14f74e/mini.png)](https://insight.sensiolabs.com/projects/4bd53bf6-4ca4-4b8c-a9f9-73611b14f74e) [![Coverage Status](https://coveralls.io/repos/magephp/magallanes/badge.svg?branch=master&service=github)](https://coveralls.io/github/magephp/magallanes?branch=master) [![Build Status](https://travis-ci.org/magephp/magallanes.svg)](https://travis-ci.org/magephp/magallanes)
 
 ### What's Magallanes? ###
 Magallanes is a deployment tool for PHP applications; it's quite simple to use and manage.
@@ -35,7 +35,7 @@ $ bin/mage version
 ### System-wide installation with composer ###
 
 ```bash
-$ composer global require "magephp/magallanes=~1.0.*"
+$ composer global require "magephp/magallanes=~1.1.*"
 ```
 
 Make sure you have ~/.composer/vendor/bin/ in your path.
