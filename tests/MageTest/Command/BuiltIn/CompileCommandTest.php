@@ -4,8 +4,9 @@ namespace MageTest\Command\BuiltIn;
 
 use MageTest\TestHelper\BaseTest;
 use Mage\Command\BuiltIn\CompileCommand;
-use phpmock\phpmock\FixedValueFunction;
-use phpmock\phpmock\MockBuilder;
+use phpmock\Mock;
+use phpmock\MockBuilder;
+use phpmock\functions\FixedValueFunction;
 
 /**
  * Class CompileCommandTest
