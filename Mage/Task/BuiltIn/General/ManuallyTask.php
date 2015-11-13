@@ -34,8 +34,7 @@ class ManuallyTask extends AbstractTask
 {
 
     /**
-     * (non-PHPdoc)
-     * @see \Mage\Task\AbstractTask::getName()
+     * Get the task name
      */
     public function getName()
     {
@@ -43,7 +42,12 @@ class ManuallyTask extends AbstractTask
     }
 
     /**
-     * @see \Mage\Task\AbstractTask::run()
+     * Execute all commands
+     *
+     * Usage:
+     * - general/manually:
+     *   - rm -rf /
+     *   - shutdown -h -s
      */
     public function run()
     {

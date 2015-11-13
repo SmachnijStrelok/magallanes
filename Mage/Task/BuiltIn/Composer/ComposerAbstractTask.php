@@ -21,7 +21,8 @@ abstract class ComposerAbstractTask extends AbstractTask
 {
     protected function getComposerCmd()
     {
-        $composerCmd = $this->getParameter('composer_cmd', $this->getConfig()->general('composer_cmd', 'php composer.phar'));
+        $phpCmd = $this->getParameter('php_cmd', $this->getConfig()->general('php_cmd', 'php '));
+        $composerCmd = $this->getParameter('composer_cmd', $this->getConfig()->general('composer_cmd', $phpCmd . 'composer.phar'));
         return $this->getConfig()->general('composer_cmd', $composerCmd);
     }
 }

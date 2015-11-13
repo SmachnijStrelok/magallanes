@@ -61,7 +61,7 @@ class GitRemoteCacheTask extends BaseStrategyTaskAbstract implements IsReleaseAw
         $deployToDirectory = $this->getConfig()->deployment('to');
         if ($this->getConfig()->release('enabled', false) === true) {
             $releasesDirectory = $this->getConfig()->release('directory', 'releases');
-            $symlink           = $this->getConfig()->release('symlink', 'current');
+            $symlink           = $this->getConfig()->release('symlink', 'public');
 
             $currentRelease    = false;
             $deployToDirectory = rtrim($deployToDirectory, '/') . '/' . $releasesDirectory . '/' . $this->getConfig()->getReleaseId();

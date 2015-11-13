@@ -22,7 +22,7 @@ use Mage\Task\SkipException;
 class ChangeBranchTask extends AbstractTask
 {
     /**
-     * Branch the executiong began with
+     * Branch the execution began with
      * @var string
      */
     protected static $startingBranch = 'master';
