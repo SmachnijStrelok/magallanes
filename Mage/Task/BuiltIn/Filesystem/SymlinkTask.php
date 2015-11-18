@@ -62,9 +62,9 @@ class SymlinkTask extends AbstractTask
      */
     public function run()
     {
-        $command = 'ln -fs ' . $this->getAbsolutPath($this->getTarget());
+        $command = 'ln -fs ' . $this->getAbsolutePath($this->getTarget());
         if ($this->getLink()) {
-            $command .= ' ' . $this->getAbsolutPath($this->getLink());
+            $command .= ' ' . $this->getAbsolutePath($this->getLink());
         }
         $result = $this->runCommand($command);
         return $result;

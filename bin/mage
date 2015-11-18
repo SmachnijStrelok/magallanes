@@ -15,7 +15,7 @@ if (empty($timezone)) {
 
 $baseDir = dirname(dirname(__FILE__));
 
-define('MAGALLANES_VERSION', '1.1.1');
+define('MAGALLANES_VERSION', '1.1.2');
 define('MAGALLANES_DIRECTORY', $baseDir);
 
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
