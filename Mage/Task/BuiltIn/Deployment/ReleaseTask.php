@@ -45,8 +45,7 @@ class ReleaseTask extends AbstractTask implements IsReleaseAware, SkipOnOverride
                 $releasesDirectory = rtrim($this->getConfig()->deployment('to'), '/') . '/' . $releasesDirectory;
             }
 
-            $releaseId = $this->getConfig()->getReleaseId();
-
+            $releaseId   = $this->getConfig()->getReleaseId();
             $currentCopy = $releasesDirectory . '/' . $releaseId;
 
             //Check if target user:group is specified
@@ -76,8 +75,8 @@ class ReleaseTask extends AbstractTask implements IsReleaseAware, SkipOnOverride
 
             if ($resultFetch && $userGroup != '') {
                 $command = 'chown -R ' . $userGroup . ' ' . $currentCopy
-                . ' && '
-                . 'chown ' . $userGroup . ' ' . $releasesDirectory;
+                    . ' && '
+                    . 'chown ' . $userGroup . ' ' . $releasesDirectory;
                 $result = $this->runCommandRemote($command);
                 if (!$result) {
                     return $result;
@@ -86,7 +85,14 @@ class ReleaseTask extends AbstractTask implements IsReleaseAware, SkipOnOverride
 
             // Switch symlink and change owner
             $tmplink = $symlink . '.tmp';
-            $command = "ln -sfn {$currentCopy} {$tmplink}";
+
+            // Check if this is a bloody Magento project which follow Vuelo rules
+            if ($this->getConfig()->extras('magento', 'enabled', false) === true) {
+                $command = "ln -sfn {$currentCopy}/public {$tmplink}";
+            } else {
+                $command = "ln -sfn {$currentCopy} {$tmplink}";
+            }
+
             if ($resultFetch && $userGroup != '') {
                 $command .= " && chown -h {$userGroup} {$tmplink}";
             }

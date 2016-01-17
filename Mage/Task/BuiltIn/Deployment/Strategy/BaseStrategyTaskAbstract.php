@@ -70,9 +70,9 @@ abstract class BaseStrategyTaskAbstract extends AbstractTask implements IsReleas
      */
     protected function getSharedStuffs()
     {
-        $sharedFiles = $this->getConfig()->extras('shared', 'files', array());
+        $sharedFiles = $this->getConfig()->extras('shared', 'linked_files', array());
 
-        $sharedFolders = $this->getConfig()->extras('shared', 'folders', array());
+        $sharedFolders = $this->getConfig()->extras('shared', 'linked_folders', array());
 
         return array_merge($sharedFiles, $sharedFolders);
     }

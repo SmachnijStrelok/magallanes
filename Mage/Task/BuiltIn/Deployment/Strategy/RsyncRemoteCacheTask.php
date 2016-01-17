@@ -62,7 +62,7 @@ class RsyncRemoteCacheTask extends BaseStrategyTaskAbstract implements IsRelease
         $this->checkOverrideRelease();
 
         $excludes             = $this->getExcludes();
-        $excludesListFilePath = $this->getConfig()->deployment('excludes_file', '.rsync_excludes');
+        $excludesListFilePath = $this->getConfig()->deployment('excludes_file', '');
 
         // If we are working with releases
         $deployToDirectory = $this->getConfig()->deployment('to');
@@ -79,24 +79,19 @@ class RsyncRemoteCacheTask extends BaseStrategyTaskAbstract implements IsRelease
             $resultFetch = $this->runCommandRemote('ls -ld ' . $symlink . ' | cut -d"/" -f2', $currentRelease);
 
             if ($resultFetch && $currentRelease) {
-                // If deployment configuration is rsync, include a flag to simply
-                // sync the deltas between the prior release. | rsync: { copy: yes }
+                // If deployment configuration is rsync, include a flag to simply sync the deltas between the prior release
+                // rsync: { copy: yes }
                 $rsync_copy = $this->getConfig()->deployment('rsync');
                 // If copy_tool_rsync, use rsync rather than cp for finer control of what is copied
-                $testCmd = 'test -d ' . $releasesDirectory . '/' . $currentRelease;
-                if ($rsync_copy && is_array($rsync_copy) && $rsync_copy['copy'] && $this->runCommandRemote($testCmd)) {
+                if ($rsync_copy && is_array($rsync_copy) && $rsync_copy['copy'] && $this->runCommandRemote('test -d ' . $releasesDirectory . '/' . $currentRelease)) {
                     if (isset($rsync_copy['copy_tool_rsync'])) {
-                        $command = "rsync -a {$this->excludes(array_merge($excludes, $rsync_copy['rsync_excludes']))} "
-                        . "$releasesDirectory/$currentRelease/ $releasesDirectory/{$this->getConfig()->getReleaseId()}";
-                        $this->runCommandRemote($command);
+                        $this->runCommandRemote("rsync -a {$this->excludes(array_merge($excludes, $rsync_copy['rsync_excludes']))} "
+                            . "$releasesDirectory/$currentRelease/ $releasesDirectory/{$this->getConfig()->getReleaseId()}");
                     } else {
-                        $command = 'cp -R ' . $releasesDirectory . '/' . $currentRelease . ' '
-                        . $releasesDirectory . '/' . $this->getConfig()->getReleaseId();
-                        $this->runCommandRemote($command);
+                        $this->runCommandRemote('cp -R ' . $releasesDirectory . '/' . $currentRelease . ' ' . $releasesDirectory . '/' . $this->getConfig()->getReleaseId());
                     }
                 } else {
-                    $commmand = 'mkdir -p ' . $releasesDirectory . '/' . $this->getConfig()->getReleaseId();
-                    $this->runCommandRemote($command);
+                    $this->runCommandRemote('mkdir -p ' . $releasesDirectory . '/' . $this->getConfig()->getReleaseId());
                 }
             }
         }

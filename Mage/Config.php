@@ -64,7 +64,10 @@ class Config
     /**
      * Magallanes Global and Environment configuration
      */
-    private $generalConfig     = array();
+    private $generalConfig = array();
+    /**
+     * @var array
+     */
     private $environmentConfig = array();
 
     /**
@@ -500,7 +503,7 @@ class Config
             } else {
                 return $default;
             }
-        } else if (($option === 'vcs' || $option === 'rsync' || $option === 'shared') && $property !== 'top') {
+        } else if (($option === 'vcs' || $option === 'rsync' || $option === 'shared' || $option === 'magento') && $property !== 'top') {
             // Host Config
             if (is_array($this->hostConfig) && isset($this->hostConfig['extras'][$option])) {
                 if (isset($this->hostConfig['extras'][$option][$property])) {
@@ -522,6 +525,9 @@ class Config
         }
     }
 
+    /**
+     * @param $directory
+     */
     public function setSourceTemporal($directory)
     {
         $this->environmentConfig['deployment']['source']['temporal'] = $directory;
@@ -635,6 +641,9 @@ class Config
         return $this->parseConfigText(file_get_contents($filePath));
     }
 
+    /**
+     * @param $input
+     */
     public function parseConfigText($input)
     {
         return Yaml::parse($input);
