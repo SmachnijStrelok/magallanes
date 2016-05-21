@@ -474,6 +474,7 @@ class Config
         }
     }
 
+
     /**
      * Get extras configuration
      *
