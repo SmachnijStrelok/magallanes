@@ -62,8 +62,8 @@ class LinkSharedFilesTask extends AbstractTask implements IsReleaseAware
     public function run()
     {
         $linkedEntities = array_merge(
-            $this->getParameter(self::LINKED_FILES, array()),
-            $this->getParameter(self::LINKED_FOLDERS, array())
+            $this->getConfig()->extras('shared', self::LINKED_FILES, array()),
+            $this->getConfig()->extras('shared', self::LINKED_FOLDERS, array())
         );
 
         if (empty($linkedEntities)) {
@@ -71,7 +71,7 @@ class LinkSharedFilesTask extends AbstractTask implements IsReleaseAware
         }
 
         $remoteDirectory = rtrim($this->getConfig()->deployment('to'), '/') . '/';
-        $sharedFolderPath = $remoteDirectory . $this->getParameter('shared', 'shared');
+        $sharedFolderPath = $remoteDirectory . $this->getConfig()->extras('directory', 'shared');
         $releasesDirectoryPath = $remoteDirectory . $this->getConfig()->release('directory', 'releases');
         $currentCopy = $releasesDirectoryPath . '/' . $this->getConfig()->getReleaseId();
 
@@ -136,7 +136,7 @@ class LinkSharedFilesTask extends AbstractTask implements IsReleaseAware
      */
     private function getPath($linkedEntity)
     {
-        $linkingStrategy = $this->getParameter(self::LINKED_STRATEGY, self::ABSOLUTE_LINKING);
+        $linkingStrategy = $this->getConfig()->extras(self::LINKED_STRATEGY, self::ABSOLUTE_LINKING);
         if (is_array($linkedEntity)) {
             list($path, $strategy) = each($linkedEntity);
             if (!in_array($strategy, self::$linkingStrategies)) {

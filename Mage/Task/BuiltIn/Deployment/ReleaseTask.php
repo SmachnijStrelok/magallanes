@@ -10,6 +10,7 @@
 
 namespace Mage\Task\BuiltIn\Deployment;
 
+use Mage\Console;
 use Mage\Task\AbstractTask;
 use Mage\Task\Releases\IsReleaseAware;
 use Mage\Task\Releases\SkipOnOverride;
@@ -88,6 +89,7 @@ class ReleaseTask extends AbstractTask implements IsReleaseAware, SkipOnOverride
 
             // Check if this is a bloody Magento project which follow Vuelo rules
             if ($this->getConfig()->extras('magento', 'enabled', false) === true) {
+                Console::log('Re-deploy Octopius Magento source code structure to ServerPilot structure.');
                 $command = "ln -sfn {$currentCopy}/public {$tmplink}";
             } else {
                 $command = "ln -sfn {$currentCopy} {$tmplink}";
