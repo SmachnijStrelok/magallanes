@@ -136,7 +136,7 @@ class LinkSharedFilesTask extends AbstractTask implements IsReleaseAware
      */
     private function getPath($linkedEntity)
     {
-        $linkingStrategy = $this->getConfig()->extras(self::LINKED_STRATEGY, self::ABSOLUTE_LINKING);
+        $linkingStrategy = $this->getConfig()->extras('shared', self::LINKED_STRATEGY, self::ABSOLUTE_LINKING);
         if (is_array($linkedEntity)) {
             list($path, $strategy) = each($linkedEntity);
             if (!in_array($strategy, self::$linkingStrategies)) {
