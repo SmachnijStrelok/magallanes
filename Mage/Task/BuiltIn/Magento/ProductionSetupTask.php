@@ -10,14 +10,14 @@
 
 namespace Mage\Task\BuiltIn\Magento;
 
-use Mage\Task\AbstractTask;
+use Mage\Task\BuiltIn\Magento\MagentoAbstractTask;
 
 /**
  * Task for Production environment setup
  *
  * @author Hector Nguyen <hectornguyen@octopius.com>
  */
-class ProductionSetupTask extends AbstractTask
+class ProductionSetupTask extends MagentoAbstractTask
 {
     /**
      * (non-PHPdoc)
@@ -29,22 +29,22 @@ class ProductionSetupTask extends AbstractTask
     }
 
     /**
-     * Clears Cache
+     * Multiple things going happen...
      * @see \Mage\Task\AbstractTask::run()
      */
     public function run()
     {
-        $command = 'php5.6-sp -f bin/magento setup:upgrade 2&>1';
-        $result = $this->runCommandRemote($command);
+        $command = $this->getAppPath() . ' setup:upgrade 2&>1';
+        $result = $this->runCommand($command);
 
-        $command = 'php5.6-sp -dmemory_limit=-1 -f bin/magento setup:static-content:deploy en_US 2&>1';
-        $result = $this->runCommandRemote($command);
+        $command = $this->getAppPath() . ' -dmemory_limit=-1 -f bin/magento setup:static-content:deploy en_US 2&>1';
+        $result = $this->runCommand($command);
 
-        $command = 'php5.6-sp -dmemory_limit=-1 -f bin/magento setup:static-content:deploy vi_VN 2&>1';
-        $result = $this->runCommandRemote($command);
+        $command = $this->getAppPath() . ' -dmemory_limit=-1 -f bin/magento setup:static-content:deploy vi_VN 2&>1';
+        $result = $this->runCommand($command);
 
-		$command = 'php5.6-sp -dmemory_limit=-1 -f bin/magento setup:di:compile-multi-tenant 2&>1';
-		$result = $this->runCommandRemote($command);
+		$command = $this->getAppPath() . ' -dmemory_limit=-1 -f bin/magento setup:di:compile-multi-tenant 2&>1';
+		$result = $this->runCommand($command);
 
         return $result;
     }

@@ -10,14 +10,14 @@
 
 namespace Mage\Task\BuiltIn\Magento;
 
-use Mage\Task\AbstractTask;
+use Mage\Task\BuiltIn\Magento\MagentoAbstractTask;
 
 /**
  * Task for Magento 2 Set Permission
  *
  * @author Hector Nguyen <hectornguyen@octopius.com>
  */
-class SetPermissionsTask extends AbstractTask
+class SetPermissionsTask extends MagentoAbstractTask
 {
     /**
      * (non-PHPdoc)

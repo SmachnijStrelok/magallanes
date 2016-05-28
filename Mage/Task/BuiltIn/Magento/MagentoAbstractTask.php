@@ -21,10 +21,11 @@ abstract class MagentoAbstractTask extends AbstractTask
 {
     protected function getAppPath()
     {
+        $phpCmd = $this->getParameter('php_cmd', $this->getConfig()->general('php_cmd', 'php '));
         if ($this->getConfig()->extras('magento', 'version', '1') === '2') {
-            $defaultAppPath = 'bin/magento';
+            $defaultAppPath = $phpCmd . 'bin/magento';
         } else {
-            $defaultAppPath = 'bin/magerun';
+            $defaultAppPath = $phpCmd . 'bin/magerun';
         }
 
         return $this->getConfig()->extras('magento', 'app_path', $defaultAppPath);

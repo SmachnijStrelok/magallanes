@@ -10,14 +10,14 @@
 
 namespace Mage\Task\BuiltIn\Magento;
 
-use Mage\Task\AbstractTask;
+use Mage\Task\BuiltIn\Magento\MagentoAbstractTask;
 
 /**
  * Task for Clearing Cache
  *
  * @author Oscar Reales <oreales@gmail.com>
  */
-class ClearCacheTask extends AbstractTask
+class ClearCacheTask extends MagentoAbstractTask
 {
     /**
      * (non-PHPdoc)

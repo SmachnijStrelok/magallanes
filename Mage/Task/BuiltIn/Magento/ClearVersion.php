@@ -10,14 +10,14 @@
 
 namespace Mage\Task\BuiltIn\Magento;
 
-use Mage\Task\AbstractTask;
+use Mage\Task\BuiltIn\Magento\MagentoAbstractTask;
 
 /**
  * Task for Clearing Full Page Cache
  *
  * @author Hector Nguyen <hectornguyen@octopius.com>
  */
-class ClearVersionTask extends AbstractTask
+class ClearVersionTask extends MagentoAbstractTask
 {
     /**
      * Returns Title of the Task
