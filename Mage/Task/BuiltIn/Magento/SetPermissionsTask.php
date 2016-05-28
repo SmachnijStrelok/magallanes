@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Mage\Task\BuiltIn\Magento2;
+namespace Mage\Task\BuiltIn\Magento;
 
 use Mage\Task\AbstractTask;
 
@@ -35,7 +35,7 @@ class SetPermissionsTask extends AbstractTask
     public function run()
     {
         $command = 'chmod u+x bin/magento';
-        $result = $this->runRemoteCommand($command);
+        $result = $this->runCommandRemote($command);
 
         return $result;
     }

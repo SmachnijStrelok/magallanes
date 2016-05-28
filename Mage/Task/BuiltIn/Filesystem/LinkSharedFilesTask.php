@@ -71,7 +71,7 @@ class LinkSharedFilesTask extends AbstractTask implements IsReleaseAware
         }
 
         $remoteDirectory = rtrim($this->getConfig()->deployment('to'), '/') . '/';
-        $sharedFolderPath = $remoteDirectory . $this->getConfig()->extras('directory', 'shared');
+        $sharedFolderPath = $remoteDirectory . $this->getConfig()->extras('directory', 'top', 'shared');
         $releasesDirectoryPath = $remoteDirectory . $this->getConfig()->release('directory', 'releases');
         $currentCopy = $releasesDirectoryPath . '/' . $this->getConfig()->getReleaseId();
 

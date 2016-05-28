@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Mage\Task\BuiltIn\Magento2;
+namespace Mage\Task\BuiltIn\Magento;
 
 use Mage\Task\AbstractTask;
 
@@ -35,16 +35,16 @@ class ProductionSetupTask extends AbstractTask
     public function run()
     {
         $command = 'php5.6-sp -f bin/magento setup:upgrade 2&>1';
-        $result = $this->runRemoteCommand($command);
+        $result = $this->runCommandRemote($command);
 
         $command = 'php5.6-sp -dmemory_limit=-1 -f bin/magento setup:static-content:deploy en_US 2&>1';
-        $result = $this->runRemoteCommand($command);
+        $result = $this->runCommandRemote($command);
 
         $command = 'php5.6-sp -dmemory_limit=-1 -f bin/magento setup:static-content:deploy vi_VN 2&>1';
-        $result = $this->runRemoteCommand($command);
+        $result = $this->runCommandRemote($command);
 
 		$command = 'php5.6-sp -dmemory_limit=-1 -f bin/magento setup:di:compile-multi-tenant 2&>1';
-		$result = $this->runRemoteCommand($command);
+		$result = $this->runCommandRemote($command);
 
         return $result;
     }
