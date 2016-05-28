@@ -34,8 +34,14 @@ class SetPermissionsTask extends MagentoAbstractTask
      */
     public function run()
     {
+        $command = 'find . -type d -print0 | xargs -0 chmod 0755';
+        $result = $this->runCommand($command);
+
+        $command = 'find . -type f -print0 | xargs -0 chmod 0644';
+        $result = $this->runCommand($command);
+
         $command = 'chmod u+x bin/magento';
-        $result = $this->runCommandRemote($command);
+        $result = $this->runCommand($command);
 
         return $result;
     }
