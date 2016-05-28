@@ -2,7 +2,7 @@
 /*
  * This file is part of the Magallanes package.
  *
- * (c) J.Moriarty <moriarty@codefelony.com>
+ * (c) Hector Nguyen <hectornguyen@octopius.com>
  * (c) Alex V Kotelnikov <gudron@gudron.me>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -27,7 +27,7 @@ use Mage\Task\SkipException;
 /**
  * Command for Deploying
  *
- * @author J.Moriarty <moriarty@codefelony.com>
+ * @author Hector Nguyen <hectornguyen@octopius.com>
  */
 class DeployCommand extends AbstractCommand implements RequiresEnvironment
 {

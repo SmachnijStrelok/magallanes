@@ -2,7 +2,7 @@
 /*
  * This file is part of the Magallanes package.
  *
- * (c) J.Moriarty <moriarty@codefelony.com>
+ * (c) Hector Nguyen <hectornguyen@octopius.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,7 @@ use Mage\Task\AbstractTask;
 /**
  * Task for Removing an used Cloned Repository
  *
- * @author J.Moriarty <moriarty@codefelony.com>
+ * @author Hector Nguyen <hectornguyen@octopius.com>
  */
 class RemoveCloneTask extends AbstractTask
 {

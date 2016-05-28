@@ -2,7 +2,7 @@
 /*
  * This file is part of the Magallanes package.
  *
- * (c) J.Moriarty <moriarty@codefelony.com>
+ * (c) Hector Nguyen <hectornguyen@octopius.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,7 @@ use Mage\Task\BuiltIn\Symfony2\SymfonyAbstractTask;
  *    symfony2/cache-clear: { env: dev }
  *    symfony2/cache-clear: { env: dev, optional: --no-warmup }
  *
- * @author J.Moriarty <moriarty@codefelony.com>
+ * @author Hector Nguyen <hectornguyen@octopius.com>
  * @author Samuel Chiriluta <samuel4x4@gmail.com>
  */
 class CacheClearTask extends SymfonyAbstractTask

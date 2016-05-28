@@ -2,7 +2,7 @@
 /*
  * This file is part of the Magallanes package.
  *
- * (c) J.Moriarty <moriarty@codefelony.com>
+ * (c) Hector Nguyen <hectornguyen@octopius.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -37,7 +37,7 @@ use Mage\Task\ErrorWithMessageException;
  * (c) ActWeb 2013
  * (c) Matt Lowe (marl.scot.1@googlemail.com)
  *
- * Extends Magallanes (c) J.Moriarty <moriarty@codefelony.com>
+ * Extends Magallanes (c) Hector Nguyen <hectornguyen@octopius.com>
  *
  */
 class EncryptTask extends AbstractTask
