@@ -34,16 +34,16 @@ class ProductionSetupTask extends MagentoAbstractTask
      */
     public function run()
     {
-        $command = $this->getAppPath() . ' setup:upgrade 2&>1';
+        $command = $this->getAppPath() . ' setup:upgrade';
         $result = $this->runCommand($command);
 
-        $command = $this->getAppPath() . ' -dmemory_limit=-1 -f bin/magento setup:static-content:deploy en_US 2&>1';
+        $command = $this->getAppPath() . ' setup:static-content:deploy en_US';
         $result = $this->runCommand($command);
 
-        $command = $this->getAppPath() . ' -dmemory_limit=-1 -f bin/magento setup:static-content:deploy vi_VN 2&>1';
+        $command = $this->getAppPath() . ' setup:static-content:deploy vi_VN';
         $result = $this->runCommand($command);
 
-		$command = $this->getAppPath() . ' -dmemory_limit=-1 -f bin/magento setup:di:compile-multi-tenant 2&>1';
+		$command = $this->getAppPath() . ' setup:di:compile-multi-tenant';
 		$result = $this->runCommand($command);
 
         return $result;
