@@ -4,17 +4,16 @@ namespace MageTest\Command\BuiltIn;
 
 use MageTest\TestHelper\BaseTest;
 use Mage\Command\BuiltIn\CompileCommand;
-use phpmock\Mock;
-use phpmock\MockBuilder;
-use phpmock\functions\FixedValueFunction;
+use malkusch\phpmock\FixedValueFunction;
+use malkusch\phpmock\MockBuilder;
 
 /**
  * Class CompileCommandTest
  * @package MageTest\Command\BuiltIn
  * @coversDefaultClass Mage\Command\BuiltIn\CompileCommand
- * @uses phpmock\phpmock\FixedValueFunction
- * @uses phpmock\phpmock\Mock
- * @uses phpmock\phpmock\MockBuilder
+ * @uses malkusch\phpmock\FixedValueFunction
+ * @uses malkusch\phpmock\Mock
+ * @uses malkusch\phpmock\MockBuilder
  * @uses Mage\Console
  * @uses Mage\Console\Colors
  */
