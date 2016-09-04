@@ -1,6 +1,6 @@
 # Magallanes #
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4bd53bf6-4ca4-4b8c-a9f9-73611b14f74e/mini.png)](https://insight.sensiolabs.com/projects/4bd53bf6-4ca4-4b8c-a9f9-73611b14f74e) [![Coverage Status](https://coveralls.io/repos/magephp/magallanes/badge.svg?branch=master&service=github)](https://coveralls.io/github/magephp/magallanes?branch=master) [![Build Status](https://travis-ci.org/magephp/magallanes.svg)](https://travis-ci.org/magephp/magallanes)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9346cdd1-9525-480c-b7b8-411e39b0c199/mini.png)](https://insight.sensiolabs.com/projects/9346cdd1-9525-480c-b7b8-411e39b0c199) [![Coverage Status](https://coveralls.io/repos/magephp/magallanes/badge.svg?branch=master&service=github)](https://coveralls.io/github/magephp/magallanes?branch=master) [![Build Status](https://travis-ci.org/magephp/magallanes.svg)](https://travis-ci.org/magephp/magallanes)
 
 ### What's Magallanes? ###
 Magallanes is a deployment tool for PHP applications; it's quite simple to use and manage.
