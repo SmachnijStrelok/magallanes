@@ -37,14 +37,14 @@ class ProductionSetupTask extends MagentoAbstractTask
         $command = $this->getAppPath() . ' setup:upgrade';
         $result = $this->runCommand($command);
 
-        $command = $this->getAppPath() . ' setup:static-content:deploy en_US';
+        $command = $this->getAppPath() . ' setup:static-content:deploy vi_VN en_US';
         $result = $this->runCommand($command);
 
-        $command = $this->getAppPath() . ' setup:static-content:deploy vi_VN';
+		$command = $this->getAppPath() . ' setup:di:compile';
         $result = $this->runCommand($command);
 
-		$command = $this->getAppPath() . ' setup:di:compile-multi-tenant';
-		$result = $this->runCommand($command);
+        $command = $this->getAppPath() . ' cache:flush';
+        $result = $this->runCommand($command);
 
         return $result;
     }
