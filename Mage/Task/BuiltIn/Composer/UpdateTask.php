@@ -24,6 +24,6 @@ class UpdateTask extends ComposerAbstractTask
     public function run()
     {
         $dev = $this->getParameter('dev', true);
-        return $this->runCommand($this->getComposerCmd() . ' update' . ($dev ? ' --dev' : ' --no-dev'));
+        return $this->runCommand($this->getComposerCmd() . ' update' . ($dev ? '' : ' --no-dev'));
     }
 }
